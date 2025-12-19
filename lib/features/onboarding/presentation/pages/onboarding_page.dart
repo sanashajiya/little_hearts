@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:little_hearts/core/theme/app_colors.dart';
 import '../../domain/entities/onboarding_content.dart';
 import '../bloc/onboarding_bloc.dart';
 import '../bloc/onboarding_event.dart';
@@ -47,6 +48,7 @@ class OnboardingPage extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: AppColors.primaryLight.withOpacity(1),
             body: Column(
               children: [
                 // Auto-scrolling image slider (top section)

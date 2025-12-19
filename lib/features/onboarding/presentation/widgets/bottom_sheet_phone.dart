@@ -40,62 +40,65 @@ class BottomSheetPhone extends StatelessWidget {
             color: AppColors.textPrimary,
           ),
           const SizedBox(height: 8),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: AppColors.borderLight),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-
-                  decoration: BoxDecoration(
-                    color: AppColors.textSecondary.withOpacity(0.12),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(12),
-                      bottomLeft: Radius.circular(12),
+          Padding(
+            padding: const EdgeInsets.only(right: 28),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.borderLight),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
                     ),
-                    border: Border(
-                      right: BorderSide(color: AppColors.borderLight),
-                    ),
-                  ),
-                  child: const CustomText(
-                    text: '+91',
-                    fontSize: 16,
-                    fontWeight: FontWeightType.medium,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    onChanged: onPhoneChanged,
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                    decoration: InputDecoration(
-                      // hintText: '79811 26542',
-                      hintStyle: GoogleFonts.nunito(
-                        fontSize: getProportionateScreenHeight(16),
-                        color: AppColors.textHint,
+            
+                    decoration: BoxDecoration(
+                      color: AppColors.textSecondary.withOpacity(0.12),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomLeft: Radius.circular(12),
                       ),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
+                      border: Border(
+                        right: BorderSide(color: AppColors.borderLight),
                       ),
                     ),
-                    style: GoogleFonts.nunito(
-                      fontSize: getProportionateScreenHeight(16),
+                    child: const CustomText(
+                      text: '+91',
+                      fontSize: 16,
+                      fontWeight: FontWeightType.medium,
                       color: AppColors.textPrimary,
                     ),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: TextField(
+                      onChanged: onPhoneChanged,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                      ],
+                      decoration: InputDecoration(
+                        // hintText: '79811 26542',
+                        hintStyle: GoogleFonts.nunito(
+                          fontSize: getProportionateScreenHeight(16),
+                          color: AppColors.textHint,
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                      ),
+                      style: GoogleFonts.nunito(
+                        fontSize: getProportionateScreenHeight(16),
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 8),
@@ -129,7 +132,7 @@ class BottomSheetPhone extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -157,9 +160,9 @@ class BottomSheetPhone extends StatelessWidget {
                     children: [
                       TextSpan(
                         text:
-                            'When I click get OTP accept Terms & Conditions of little hearts',
+                            'Before proceeding, please accept the Terms & Conditions\n of Little Hearts',
                         style: GoogleFonts.nunito(
-                          fontSize: getProportionateScreenHeight(9),
+                          fontSize: getProportionateScreenHeight(10),
                           color: AppColors.textLink,
                           decoration: TextDecoration.underline,
                         ),

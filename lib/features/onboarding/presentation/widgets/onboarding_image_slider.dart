@@ -58,6 +58,7 @@ class _OnboardingImageSliderState extends State<OnboardingImageSlider> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       color: AppColors.primaryLight.withOpacity(0.95),
 
       child: Stack(

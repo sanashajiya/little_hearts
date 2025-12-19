@@ -20,8 +20,8 @@ class BottomSheetInitial extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(50),
-        topRight: Radius.circular(50),
+        topLeft: Radius.circular(32),
+        topRight: Radius.circular(32),
       ),
       child: Container(
         padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
@@ -63,42 +63,42 @@ class BottomSheetInitial extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 12,
-                  height: 12,
-                  child: Checkbox(
-                    value: termsAccepted,
-                    onChanged: onTermsChanged,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    side: const BorderSide(color: AppColors.textLink),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.nunito(
-                      fontSize: getProportionateScreenHeight(12),
-                    ),
-                    children: [
-                      TextSpan(
-                        text: 'When I click get OTP accept Terms & Conditions\n of little hearts',
-                        style: GoogleFonts.nunito(
-                          fontSize: getProportionateScreenHeight(12),
-                          color: AppColors.textLink,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            // const SizedBox(height: 10),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     SizedBox(
+            //       width: 12,
+            //       height: 12,
+            //       child: Checkbox(
+            //         value: termsAccepted,
+            //         onChanged: onTermsChanged,
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(4),
+            //         ),
+            //         side: const BorderSide(color: AppColors.textLink),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     RichText(
+            //       text: TextSpan(
+            //         style: GoogleFonts.nunito(
+            //           fontSize: getProportionateScreenHeight(12),
+            //         ),
+            //         children: [
+            //           TextSpan(
+            //             text: 'When I click get OTP accept Terms & Conditions\n of little hearts',
+            //             style: GoogleFonts.nunito(
+            //               fontSize: getProportionateScreenHeight(12),
+            //               color: AppColors.textLink,
+            //               decoration: TextDecoration.underline,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
