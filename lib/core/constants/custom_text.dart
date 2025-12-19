@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../utils/app_mediaquery.dart';
+
+/// Fonts used in Little Hearts app
+enum FontFamily {
+  nunito, // Default app font
+  mogra,  // Dashboard title & subtitle
+}
+
+/// Font weight types
+enum FontWeightType {
+  regular,
+  medium,
+  semiBold,
+  bold,
+  extraBold,
+}
+
+/// Extension for font weights
+extension FontWeightTypeExtension on FontWeightType {
+  FontWeight get value {
+    switch (this) {
+      case FontWeightType.regular:
+        return FontWeight.w400;
+      case FontWeightType.medium:
+        return FontWeight.w500;
+      case FontWeightType.semiBold:
+        return FontWeight.w600;
+      case FontWeightType.bold:
+        return FontWeight.w700;
+      case FontWeightType.extraBold:
+        return FontWeight.w800;
+    }
+  }
+}
+
+/// Reusable Custom Text Widget
+class CustomText extends StatelessWidget {
+  final String text;
+  final FontFamily fontFamily;
+  final FontWeightType fontWeight;
+  final double fontSize;
+  final Color color;
+  final TextAlign textAlign;
+  final int? maxLines;
+  final TextOverflow overflow;
+  final TextDecoration decoration;
+
+  const CustomText({
+    super.key,
+    required this.text,
+    this.fontFamily = FontFamily.nunito, // 👈 default
+    this.fontWeight = FontWeightType.regular,
+    this.fontSize = 14,
+    this.color = const Color(0xFF000000),
+    this.textAlign = TextAlign.start,
+    this.maxLines,
+    this.overflow = TextOverflow.ellipsis,
+    this.decoration = TextDecoration.none,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle style;
+
+    switch (fontFamily) {
+      case FontFamily.mogra:
+        style = GoogleFonts.mogra(
+          fontSize: getProportionateScreenHeight(fontSize),
+          fontWeight: fontWeight.value,
+          color: color,
+          decoration: decoration,
+        );
+        break;
+
+      case FontFamily.nunito:
+      default:
+        style = GoogleFonts.nunito(
+          fontSize: getProportionateScreenHeight(fontSize),
+          fontWeight: fontWeight.value,
+          color: color,
+          decoration: decoration,
+        );
+    }
+
+    return Text(
+      text,
+      style: style,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: overflow,
+    );
+  }
+}
