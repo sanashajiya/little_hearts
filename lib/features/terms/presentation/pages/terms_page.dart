@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/constants/custom_text.dart';
 
 class TermsPage extends StatelessWidget {
   const TermsPage({super.key});
@@ -9,21 +10,23 @@ class TermsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: const Text('Terms & Conditions'),
+        title: const CustomText(
+          text: 'Terms & Conditions',
+          fontSize: 18,
+          fontWeight: FontWeightType.medium,
+          color: AppColors.white,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
       ),
       body: const Center(
-        child: Text(
-          'Terms & Conditions Page\n(Coming Soon)',
+        child: CustomText(
+          text: 'Terms & Conditions Page\n(Coming Soon)',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            color: AppColors.textPrimary,
-          ),
+          fontSize: 18,
+          color: AppColors.textPrimary,
         ),
       ),
     );
   }
 }
-

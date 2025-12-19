@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/constants/custom_text.dart';
+import '../../../../core/utils/app_mediaquery.dart';
 
 class BottomSheetPhone extends StatelessWidget {
   final String phoneNumber;
@@ -30,13 +33,11 @@ class BottomSheetPhone extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Enter Mobile  Number',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: AppColors.textPrimary,
-            ),
+          const CustomText(
+            text: 'Enter Mobile  Number',
+            fontSize: 16,
+            fontWeight: FontWeightType.regular,
+            color: AppColors.textPrimary,
           ),
           const SizedBox(height: 8),
           Container(
@@ -62,13 +63,11 @@ class BottomSheetPhone extends StatelessWidget {
                       right: BorderSide(color: AppColors.borderLight),
                     ),
                   ),
-                  child: const Text(
-                    '+91',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textPrimary,
-                    ),
+                  child: const CustomText(
+                    text: '+91',
+                    fontSize: 16,
+                    fontWeight: FontWeightType.medium,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 Expanded(
@@ -79,14 +78,19 @@ class BottomSheetPhone extends StatelessWidget {
                       FilteringTextInputFormatter.digitsOnly,
                       LengthLimitingTextInputFormatter(10),
                     ],
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       // hintText: '79811 26542',
-                      hintStyle: TextStyle(color: AppColors.textHint),
+                      hintStyle: GoogleFonts.nunito(
+                        fontSize: getProportionateScreenHeight(16),
+                        color: AppColors.textHint,
+                      ),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
                     ),
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: GoogleFonts.nunito(
+                      fontSize: getProportionateScreenHeight(16),
                       color: AppColors.textPrimary,
                     ),
                   ),
@@ -95,11 +99,13 @@ class BottomSheetPhone extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'You will receive an OTP on this number',
-            style: TextStyle(fontSize: 11, color: AppColors.black, fontWeight: FontWeight.w500),
+          const CustomText(
+            text: 'You will receive an OTP on this number',
+            fontSize: 12,
+            fontWeight: FontWeightType.medium,
+            color: AppColors.black,
           ),
-          // const SizedBox(height: 10),
+          const SizedBox(height: 4),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: SizedBox(
@@ -113,13 +119,11 @@ class BottomSheetPhone extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'Get OTP',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
+                child: const CustomText(
+                  text: 'Get OTP',
+                  fontSize: 18,
+                  fontWeight: FontWeightType.medium,
+                  color: AppColors.white,
                 ),
               ),
             ),
@@ -146,13 +150,16 @@ class BottomSheetPhone extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 RichText(
-                  text: const TextSpan(
-                    style: TextStyle(fontSize: 9),
+                  text: TextSpan(
+                    style: GoogleFonts.nunito(
+                      fontSize: getProportionateScreenHeight(9),
+                    ),
                     children: [
                       TextSpan(
                         text:
                             'When I click get OTP accept Terms & Conditions of little hearts',
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
+                          fontSize: getProportionateScreenHeight(9),
                           color: AppColors.textLink,
                           decoration: TextDecoration.underline,
                         ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/onboarding_content.dart';
 import 'page_indicator.dart';
+import '../../../../core/constants/custom_text.dart';
 
 class OnboardingImageSlider extends StatefulWidget {
   final List<OnboardingContent> contents;
@@ -57,7 +58,8 @@ class _OnboardingImageSliderState extends State<OnboardingImageSlider> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.onboardingBg,
+      color: AppColors.primaryLight.withOpacity(0.95),
+
       child: Stack(
         children: [
           PageView.builder(
@@ -71,43 +73,38 @@ class _OnboardingImageSliderState extends State<OnboardingImageSlider> {
               final content = widget.contents[index];
               return Column(
                 children: [
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 140),
                   // Title
-                  Text(
-                    content.title,
-                    style: const TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textWhite,
-                      fontStyle: FontStyle.italic,
-                      fontFamily: 'serif',
-                    ),
+                  CustomText(
+                    text: content.title,
+                    fontFamily: FontFamily.mogra, // 👈 Mogra font
+                    fontSize: 32,
+                    fontWeight: FontWeightType.medium,
+                    color: AppColors.textWhite,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   // Subtitle
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Text(
-                      content.subtitle,
+                    child: CustomText(
+                      text: content.subtitle,
+                      fontFamily: FontFamily.mogra, // 👈 Mogra font
+                      fontSize: 14,
+                      fontWeight: FontWeightType.semiBold,
+                      color: AppColors.textWhite.withValues(alpha: 0.9),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textWhite.withValues(alpha: 0.9),
-                        letterSpacing: 1.5,
-                        height: 1.4,
-                      ),
+                      maxLines: 3,
                     ),
                   ),
+
                   const SizedBox(height: 20),
                   // Image
                   Expanded(
+                    flex: 4,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Image.asset(
-                        content.image,
-                        fit: BoxFit.contain,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+                      child: Image.asset(content.image, fit: BoxFit.cover),
                     ),
                   ),
                 ],
@@ -128,4 +125,3 @@ class _OnboardingImageSliderState extends State<OnboardingImageSlider> {
     );
   }
 }
-

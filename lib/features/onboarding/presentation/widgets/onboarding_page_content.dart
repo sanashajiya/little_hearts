@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/constants/custom_text.dart';
+import '../../../../core/utils/app_mediaquery.dart';
 import '../../domain/entities/onboarding_content.dart';
 
 class OnboardingPageContent extends StatelessWidget {
   final OnboardingContent content;
 
-  const OnboardingPageContent({
-    super.key,
-    required this.content,
-  });
+  const OnboardingPageContent({super.key, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,12 @@ class OnboardingPageContent extends StatelessWidget {
             // Title
             Text(
               content.title,
-              style: const TextStyle(
-                fontSize: 32,
+              style: GoogleFonts.nunito(
+                fontSize: getProportionateScreenHeight(32),
                 fontWeight: FontWeight.bold,
                 color: AppColors.textWhite,
                 fontStyle: FontStyle.italic,
-                shadows: [
+                shadows: const [
                   Shadow(
                     offset: Offset(2, 2),
                     blurRadius: 4,
@@ -40,8 +40,8 @@ class OnboardingPageContent extends StatelessWidget {
             Text(
               content.subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
+              style: GoogleFonts.nunito(
+                fontSize: getProportionateScreenHeight(14),
                 fontWeight: FontWeight.w500,
                 color: AppColors.textWhite.withValues(alpha: 0.9),
                 fontStyle: FontStyle.italic,
@@ -52,10 +52,7 @@ class OnboardingPageContent extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
-                child: Image.asset(
-                  content.image,
-                  fit: BoxFit.contain,
-                ),
+                child: Image.asset(content.image, fit: BoxFit.contain),
               ),
             ),
           ],
@@ -64,4 +61,3 @@ class OnboardingPageContent extends StatelessWidget {
     );
   }
 }
-

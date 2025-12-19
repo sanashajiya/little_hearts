@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/constants/custom_text.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -9,21 +10,23 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: const Text('Profile Setup'),
+        title: const CustomText(
+          text: 'Profile Setup',
+          fontSize: 18,
+          fontWeight: FontWeightType.medium,
+          color: AppColors.white,
+        ),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
       ),
       body: const Center(
-        child: Text(
-          'Profile Setup Screen\n(Coming Soon)',
+        child: CustomText(
+          text: 'Profile Setup Screen\n(Coming Soon)',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            color: AppColors.textPrimary,
-          ),
+          fontSize: 18,
+          color: AppColors.textPrimary,
         ),
       ),
     );
   }
 }
-

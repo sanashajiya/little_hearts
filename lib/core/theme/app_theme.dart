@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
@@ -10,11 +11,8 @@ class AppTheme {
         seedColor: AppColors.primary,
         brightness: Brightness.light,
       ),
-      fontFamily: 'Poppins',
-      appBarTheme: const AppBarTheme(
-        centerTitle: true,
-        elevation: 0,
-      ),
+      textTheme: GoogleFonts.nunitoTextTheme(),
+      appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -36,9 +34,7 @@ class AppTheme {
         seedColor: AppColors.primary,
         brightness: Brightness.dark,
       ),
-      fontFamily: 'Poppins',
+      textTheme: GoogleFonts.nunitoTextTheme(),
     );
   }
 }
-
-

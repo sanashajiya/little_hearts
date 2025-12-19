@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/constants/custom_text.dart';
+import '../../../../core/utils/app_mediaquery.dart';
 
 class BottomSheetInitial extends StatelessWidget {
   final bool termsAccepted;
@@ -29,19 +32,15 @@ class BottomSheetInitial extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'No chats, no waiting. Real-time voice\nconnections',
-              // textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
-                height: 1.4,
-              ),
+            const CustomText(
+              text: 'No chats, no waiting. Real-time voice\nconnections',
+              fontSize: 16,
+              fontWeight: FontWeightType.medium,
+              color: AppColors.textPrimary,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -50,19 +49,21 @@ class BottomSheetInitial extends StatelessWidget {
                     backgroundColor: AppColors.buttonPrimary,
                     foregroundColor: AppColors.white,
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius: BorderRadius.circular(30),
-                    // ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     elevation: 0,
                   ),
-                  child: const Text(
-                    "Let's Go",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  child: const CustomText(
+                    text: "Let's Go",
+                    fontSize: 16,
+                    fontWeight: FontWeightType.semiBold,
+                    color: AppColors.white,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,18 +79,17 @@ class BottomSheetInitial extends StatelessWidget {
                     side: const BorderSide(color: AppColors.textLink),
                   ),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 10),
                 RichText(
-                  text: const TextSpan(
-                    style: TextStyle(fontSize: 12),
+                  text: TextSpan(
+                    style: GoogleFonts.nunito(
+                      fontSize: getProportionateScreenHeight(12),
+                    ),
                     children: [
                       TextSpan(
-                        text: 'When I click get OTP accept ',
-                        style: TextStyle(color: AppColors.textLink),
-                      ),
-                      TextSpan(
-                        text: 'Terms & Conditions',
-                        style: TextStyle(
+                        text: 'When I click get OTP accept Terms & Conditions\n of little hearts',
+                        style: GoogleFonts.nunito(
+                          fontSize: getProportionateScreenHeight(12),
                           color: AppColors.textLink,
                           decoration: TextDecoration.underline,
                         ),
@@ -98,11 +98,6 @@ class BottomSheetInitial extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              'of little hearts',
-              style: TextStyle(fontSize: 12, color: AppColors.textLink),
             ),
           ],
         ),
