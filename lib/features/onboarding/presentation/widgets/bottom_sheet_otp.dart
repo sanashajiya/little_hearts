@@ -93,11 +93,11 @@ class _BottomSheetOtpState extends State<BottomSheetOtp> {
           ),
           const SizedBox(height: 8),
           CustomText(
-            text: 'We have sent the OTP  Sent  to +91 ${widget.phoneNumber}',
-            fontSize: 13,
-            color: AppColors.textSecondary,
+            text: 'We have sent the OTP to +91 ${widget.phoneNumber}',
+            fontSize: 12,
+            color: AppColors.textPrimary,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(4, (index) {
@@ -137,26 +137,29 @@ class _BottomSheetOtpState extends State<BottomSheetOtp> {
               );
             }),
           ),
-          const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: widget.otp.length == 4 ? widget.onContinue : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.buttonPrimary,
-                disabledBackgroundColor: AppColors.buttonDisabled,
-                foregroundColor: AppColors.white,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 8, 20, 12),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: widget.otp.length == 4 ? widget.onContinue : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.buttonPrimary,
+                  disabledBackgroundColor: AppColors.buttonDisabled,
+                  foregroundColor: AppColors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
                 ),
-                elevation: 0,
-              ),
-              child: const CustomText(
-                text: 'Continue',
-                fontSize: 16,
-                fontWeight: FontWeightType.semiBold,
-                color: AppColors.white,
+                child: const CustomText(
+                  text: 'Continue',
+                  fontSize: 18,
+                  fontWeight: FontWeightType.semiBold,
+                  color: AppColors.white,
+                ),
               ),
             ),
           ),

@@ -57,7 +57,9 @@ class OnboardingPage extends StatelessWidget {
                   child: OnboardingImageSlider(
                     contents: _contents,
                     onPageChanged: (index) {
-                      context.read<OnboardingBloc>().add(OnboardingPageChanged(index));
+                      context.read<OnboardingBloc>().add(
+                        OnboardingPageChanged(index),
+                      );
                     },
                   ),
                 ),
@@ -80,7 +82,9 @@ class OnboardingPage extends StatelessWidget {
             context.read<OnboardingBloc>().add(OnboardingLetsGoPressed());
           },
           onTermsChanged: (value) {
-            context.read<OnboardingBloc>().add(OnboardingTermsCheckboxChanged(value ?? false));
+            context.read<OnboardingBloc>().add(
+              OnboardingTermsCheckboxChanged(value ?? false),
+            );
           },
         );
       case OnboardingStep.enterPhone:
@@ -94,7 +98,12 @@ class OnboardingPage extends StatelessWidget {
             context.read<OnboardingBloc>().add(OnboardingGetOtpPressed());
           },
           onTermsChanged: (value) {
-            context.read<OnboardingBloc>().add(OnboardingTermsCheckboxChanged(value ?? false));
+            context.read<OnboardingBloc>().add(
+              OnboardingTermsCheckboxChanged(value ?? false),
+            );
+          },
+          onTermsTextClicked: () {
+            context.read<OnboardingBloc>().add(OnboardingShowTermsDialog());
           },
         );
       case OnboardingStep.verifyOtp:

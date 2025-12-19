@@ -9,6 +9,7 @@ class OnboardingState extends Equatable {
   final String otp;
   final bool termsAccepted;
   final bool showTermsDialog;
+  final bool getOtpAttempted;
   final int resendTimer;
   final bool isLoading;
 
@@ -19,6 +20,7 @@ class OnboardingState extends Equatable {
     this.otp = '',
     this.termsAccepted = false,
     this.showTermsDialog = false,
+    this.getOtpAttempted = false,
     this.resendTimer = 30,
     this.isLoading = false,
   });
@@ -30,6 +32,7 @@ class OnboardingState extends Equatable {
     String? otp,
     bool? termsAccepted,
     bool? showTermsDialog,
+    bool? getOtpAttempted,
     int? resendTimer,
     bool? isLoading,
   }) {
@@ -40,6 +43,7 @@ class OnboardingState extends Equatable {
       otp: otp ?? this.otp,
       termsAccepted: termsAccepted ?? this.termsAccepted,
       showTermsDialog: showTermsDialog ?? this.showTermsDialog,
+      getOtpAttempted: getOtpAttempted ?? this.getOtpAttempted,
       resendTimer: resendTimer ?? this.resendTimer,
       isLoading: isLoading ?? this.isLoading,
     );
@@ -47,13 +51,14 @@ class OnboardingState extends Equatable {
 
   @override
   List<Object?> get props => [
-        currentPage,
-        step,
-        phoneNumber,
-        otp,
-        termsAccepted,
-        showTermsDialog,
-        resendTimer,
-        isLoading,
-      ];
+    currentPage,
+    step,
+    phoneNumber,
+    otp,
+    termsAccepted,
+    showTermsDialog,
+    getOtpAttempted,
+    resendTimer,
+    isLoading,
+  ];
 }

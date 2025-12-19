@@ -9,47 +9,40 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeInAnimation;
-  late Animation<double> _fadeOutAnimation;
 
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 2500),
+      duration: const Duration(milliseconds: 4000),
       vsync: this,
     );
 
-    // Scale: small (0.3) → big (1.0)
-    _scaleAnimation = Tween<double>(begin: 0.3, end: 1.0).animate(
+    // Scale: small → big
+    _scaleAnimation = Tween<double>(begin: 0.3, end: 1.7).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.6, curve: Curves.easeOutBack),
+        curve: Curves.easeOutBack,
       ),
     );
 
-    // Fade in: 0 → 1
+    // Fade in: transparent → visible
     _fadeInAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.4, curve: Curves.easeIn),
-      ),
-    );
-
-    // Fade out: 1 → 0 (at the end)
-    _fadeOutAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.85, 1.0, curve: Curves.easeOut),
+        curve: Curves.easeIn,
       ),
     );
 
     _controller.forward();
 
-    // Navigate after animation completes
+    // Navigate after animation
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(const Duration(milliseconds: 300), () {
@@ -75,10 +68,8 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
         child: AnimatedBuilder(
           animation: _controller,
           builder: (context, child) {
-            // Combine fade in and fade out
-            final opacity = _fadeInAnimation.value * _fadeOutAnimation.value;
             return Opacity(
-              opacity: opacity,
+              opacity: _fadeInAnimation.value,
               child: Transform.scale(
                 scale: _scaleAnimation.value,
                 child: Image.asset(

@@ -48,3 +48,5 @@ class OnboardingTermsCheckboxChanged extends OnboardingEvent {
   @override
   List<Object?> get props => [checked];
 }
+
+class OnboardingShowTermsDialog extends OnboardingEvent {}

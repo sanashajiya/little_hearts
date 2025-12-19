@@ -11,6 +11,7 @@ class BottomSheetPhone extends StatelessWidget {
   final ValueChanged<String> onPhoneChanged;
   final VoidCallback onGetOtp;
   final ValueChanged<bool?> onTermsChanged;
+  final VoidCallback onTermsTextClicked;
 
   const BottomSheetPhone({
     super.key,
@@ -19,6 +20,7 @@ class BottomSheetPhone extends StatelessWidget {
     required this.onPhoneChanged,
     required this.onGetOtp,
     required this.onTermsChanged,
+    required this.onTermsTextClicked,
   });
 
   @override
@@ -54,7 +56,7 @@ class BottomSheetPhone extends StatelessWidget {
                       horizontal: 16,
                       vertical: 12,
                     ),
-            
+
                     decoration: BoxDecoration(
                       color: AppColors.textSecondary.withOpacity(0.12),
                       borderRadius: const BorderRadius.only(
@@ -152,22 +154,25 @@ class BottomSheetPhone extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.nunito(
-                      fontSize: getProportionateScreenHeight(9),
-                    ),
-                    children: [
-                      TextSpan(
-                        text:
-                            'Before proceeding, please accept the Terms & Conditions\n of Little Hearts',
-                        style: GoogleFonts.nunito(
-                          fontSize: getProportionateScreenHeight(10),
-                          color: AppColors.textLink,
-                          decoration: TextDecoration.underline,
-                        ),
+                GestureDetector(
+                  onTap: onTermsTextClicked,
+                  child: RichText(
+                    text: TextSpan(
+                      style: GoogleFonts.nunito(
+                        fontSize: getProportionateScreenHeight(9),
                       ),
-                    ],
+                      children: [
+                        TextSpan(
+                          text:
+                              'Before proceeding, please accept the Terms & Conditions\n of Little Hearts',
+                          style: GoogleFonts.nunito(
+                            fontSize: getProportionateScreenHeight(10),
+                            color: AppColors.textLink,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
