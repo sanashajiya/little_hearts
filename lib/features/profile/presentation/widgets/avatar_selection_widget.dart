@@ -17,8 +17,8 @@ class AvatarSelectionWidget extends StatelessWidget {
   List<String> get _avatars {
     return gender == 'female'
         ? [
-            'assets/images/female1.png',
             'assets/images/female2.png',
+            'assets/images/female1.png',
             'assets/images/female3.png',
           ]
         : [
@@ -57,7 +57,7 @@ class AvatarSelectionWidget extends StatelessWidget {
 
         // Avatar list (SCROLLABLE – NO OVERFLOW)
         SizedBox(
-          height: 190,
+          height: 200,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),

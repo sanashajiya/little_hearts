@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/theme/app_colors.dart';
+
 import '../../../../core/constants/custom_text.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../bloc/profile_setup_bloc.dart';
 import '../bloc/profile_setup_event.dart';
 import '../bloc/profile_setup_state.dart';
-import '../widgets/progress_indicator.dart' as pi;
-import '../widgets/gender_selection_widget.dart';
 import '../widgets/avatar_selection_widget.dart';
+import '../widgets/gender_selection_widget.dart';
+import '../widgets/progress_indicator.dart' as pi;
 
 class SetProfileScreen extends StatefulWidget {
   final VoidCallback onContinue;
@@ -87,7 +88,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 32),
+                // const SizedBox(height: 8),
 
                 // Title
                 Center(
@@ -99,17 +100,20 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
 
                 // Subtitle
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: const [
-                    CustomText(
-                      text: '* ',
-                      fontSize: 14,
-                      fontWeight: FontWeightType.semiBold,
-                      color: Colors.red,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: CustomText(
+                        text: '* ',
+                        fontSize: 14,
+                        fontWeight: FontWeightType.semiBold,
+                        color: Colors.red,
+                      ),
                     ),
                     CustomText(
                       text: 'Enter User Name',
@@ -123,49 +127,52 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 const SizedBox(height: 12),
 
                 // Username Input Field
-                TextField(
-                  controller: _nameController,
-                  onChanged: _validateUsername,
-                  decoration: InputDecoration(
-                    hintText: 'Min 3 - Max 20 Characters',
-                    hintStyle: const TextStyle(
-                      color: AppColors.textHint,
-                      fontSize: 12,
-                    ),
-                    filled: true,
-                    fillColor: AppColors.greyLight,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: _usernameError != null
-                            ? AppColors.error
-                            : AppColors.borderLight,
-                        width: 2,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextField(
+                    controller: _nameController,
+                    onChanged: _validateUsername,
+                    decoration: InputDecoration(
+                      hintText: 'Min 3 - Max 20 Characters',
+                      hintStyle: const TextStyle(
+                        color: AppColors.textHint,
+                        fontSize: 12,
                       ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(
-                        color: _usernameError != null
-                            ? AppColors.error
-                            : AppColors.borderLight,
-                        width: 2,
+                      filled: true,
+                      fillColor: AppColors.greyLight,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: _usernameError != null
+                              ? AppColors.error
+                              : AppColors.borderLight,
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: AppColors.primary,
-                        width: 2,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide(
+                          color: _usernameError != null
+                              ? AppColors.error
+                              : AppColors.borderLight,
+                          width: 2,
+                        ),
                       ),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    suffixText: '${_nameController.text.length}/20',
-                    suffixStyle: const TextStyle(
-                      color: AppColors.textSecondary,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 2,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      suffixText: '${_nameController.text.length}/20',
+                      suffixStyle: const TextStyle(
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ),
@@ -213,7 +220,7 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
 
                 // Continue Button
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
                   child: SizedBox(
                     width: double.infinity,
                     height: 52,

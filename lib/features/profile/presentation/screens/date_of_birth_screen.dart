@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/theme/app_colors.dart';
+
 import '../../../../core/constants/custom_text.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../bloc/profile_setup_bloc.dart';
 import '../bloc/profile_setup_event.dart';
 import '../bloc/profile_setup_state.dart';
-import '../widgets/progress_indicator.dart' as pi;
 import '../widgets/date_of_birth_picker_widget.dart';
+import '../widgets/progress_indicator.dart' as pi;
 
 class DateOfBirthScreen extends StatelessWidget {
   final VoidCallback onContinue;
@@ -24,7 +25,7 @@ class DateOfBirthScreen extends StatelessWidget {
       builder: (context, state) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,9 +35,9 @@ class DateOfBirthScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: onBack,
                       child: const Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_back_ios_new,
                         color: AppColors.primary,
-                        size: 24,
+                        size: 18,
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -50,39 +51,76 @@ class DateOfBirthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
 
-                // Date of Birth Picker
-                Center(
-                  child: DateOfBirthPickerWidget(
-                    selectedDate: state.dateOfBirth,
-                    onDateSelected: (date) {
-                      context.read<ProfileSetupBloc>().add(
-                        DateOfBirthChanged(date),
-                      );
-                    },
+                // Title
+                const Center(
+                  child: CustomText(
+                    text: 'When is your Birth Day?',
+                    fontSize: 24,
+                    fontWeight: FontWeightType.bold,
+                    color: AppColors.primary,
+                    textAlign: TextAlign.center,
                   ),
+                ),
+                const SizedBox(height: 12),
+
+                // Description
+                const Center(
+                  child: CustomText(
+                    text: 'Select your birth year to complete your profile.',
+                    fontSize: 14,
+                    fontWeight: FontWeightType.regular,
+                    color: AppColors.black,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 32),
+
+                // Birthday Image
+                Center(
+                  child: Image.asset(
+                    'assets/images/birthday.png',
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                const SizedBox(height: 32),
+
+                // Date of Birth Picker
+                DateOfBirthPickerWidget(
+                  selectedDate: state.dateOfBirth ?? DateTime(1993, 4, 27),
+                  onDateSelected: (date) {
+                    context.read<ProfileSetupBloc>().add(
+                      DateOfBirthChanged(date),
+                    );
+                  },
                 ),
                 const SizedBox(height: 48),
 
                 // Continue Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: state.canProgressFromScreen2 ? onContinue : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: state.canProgressFromScreen2
-                          ? AppColors.primary
-                          : AppColors.buttonDisabled,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: state.canProgressFromScreen2
+                          ? onContinue
+                          : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: state.canProgressFromScreen2
+                            ? AppColors.primary
+                            : AppColors.buttonDisabled,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: state.canProgressFromScreen2 ? 4 : 0,
                       ),
-                      elevation: state.canProgressFromScreen2 ? 4 : 0,
-                    ),
-                    child: const CustomText(
-                      text: 'Continue',
-                      fontSize: 16,
-                      fontWeight: FontWeightType.bold,
-                      color: Colors.white,
+                      child: const CustomText(
+                        text: 'Continue',
+                        fontSize: 16,
+                        fontWeight: FontWeightType.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

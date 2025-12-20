@@ -65,9 +65,12 @@ class GenderSelectionWidget extends StatelessWidget {
 
         // Warning text
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: const [
-            Icon(Icons.error_outline, size: 14, color: AppColors.error),
+            Padding(
+              padding: EdgeInsets.only(left: 16),
+              child: Icon(Icons.error_outline, size: 14, color: AppColors.error),
+            ),
             SizedBox(width: 6),
             CustomText(
               text: "Gender can’t be changed later",

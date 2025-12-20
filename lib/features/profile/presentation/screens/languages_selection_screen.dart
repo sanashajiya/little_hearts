@@ -24,7 +24,7 @@ class LanguagesSelectionScreen extends StatelessWidget {
       builder: (context, state) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -34,9 +34,9 @@ class LanguagesSelectionScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: onBack,
                       child: const Icon(
-                        Icons.arrow_back_ios,
+                        Icons.arrow_back_ios_new,
                         color: AppColors.primary,
-                        size: 24,
+                        size: 18,
                       ),
                     ),
                     const SizedBox(width: 8),
@@ -50,42 +50,79 @@ class LanguagesSelectionScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
 
+                // Title
+                const Center(
+                  child: CustomText(
+                    text: 'Languages You Speak',
+                    fontSize: 28,
+                    fontWeight: FontWeightType.bold,
+                    color: AppColors.primary,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                // Description
+                const Center(
+                  child: CustomText(
+                    text: 'Connect with Friends Who Speak Your Language',
+                    fontSize: 14,
+                    fontWeight: FontWeightType.regular,
+                    color: AppColors.textSecondary,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                const Center(
+                  child: CustomText(
+                    text: 'you can select up to 2 languages',
+                    fontSize: 14,
+                    fontWeight: FontWeightType.regular,
+                    color: AppColors.textSecondary,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 32),
+
                 // Language Selection Widget
                 LanguageSelectionWidget(
                   selectedLanguages: state.selectedLanguages,
                   onLanguageSelected: (language) {
                     context.read<ProfileSetupBloc>().add(
-                      LanguageSelected(language),
-                    );
+                          LanguageSelected(language),
+                        );
                   },
                   onLanguageDeselected: (language) {
                     context.read<ProfileSetupBloc>().add(
-                      LanguageDeselected(language),
-                    );
+                          LanguageDeselected(language),
+                        );
                   },
                 ),
                 const SizedBox(height: 48),
 
                 // Finish Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: state.canFinish ? onFinish : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: state.canFinish
-                          ? AppColors.primary
-                          : AppColors.buttonDisabled,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: state.canFinish ? onFinish : null,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: state.canFinish
+                            ? AppColors.primary
+                            : AppColors.buttonDisabled,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: state.canFinish ? 4 : 0,
                       ),
-                      elevation: state.canFinish ? 4 : 0,
-                    ),
-                    child: const CustomText(
-                      text: 'Finish',
-                      fontSize: 16,
-                      fontWeight: FontWeightType.bold,
-                      color: Colors.white,
+                      child: const CustomText(
+                        text: 'Finish',
+                        fontSize: 16,
+                        fontWeight: FontWeightType.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),

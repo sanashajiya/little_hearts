@@ -17,62 +17,40 @@ class LanguageSelectionWidget extends StatelessWidget {
   final List<Map<String, String>> languages = const [
     {'name': 'Telugu', 'script': 'తెలుగు', 'icon': '🏞️'},
     {'name': 'Kannada', 'script': 'ಕನ್ನಡ', 'icon': '🏛️'},
-    {'name': 'Hindi', 'script': 'हिन्द', 'icon': '🏯'},
-    {'name': 'English', 'script': 'ఇంగ్లీష్', 'icon': '🗽'},
+    {'name': 'Hindi', 'script': 'हिन्दी', 'icon': '🏯'},
+    {'name': 'English', 'script': 'ఆంగ్లం', 'icon': '🗽'},
     {'name': 'Tamil', 'script': 'தமிழ்', 'icon': '🏰'},
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const CustomText(
-          text: 'Languages You Speak',
-          fontSize: 20,
-          fontWeight: FontWeightType.semiBold,
-          color: AppColors.primary,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        const CustomText(
-          text:
-              'Connect with Friends Who Speak Your Language\nyou can select up to 2 languages',
-          fontSize: 14,
-          fontWeight: FontWeightType.regular,
-          color: AppColors.textSecondary,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 24),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: languages.length,
-          itemBuilder: (context, index) {
-            final language = languages[index];
-            final isSelected = selectedLanguages.contains(language['name']);
-            final isDisabled = !isSelected && selectedLanguages.length >= 2;
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: languages.length,
+      itemBuilder: (context, index) {
+        final language = languages[index];
+        final isSelected = selectedLanguages.contains(language['name']);
+        final isDisabled = !isSelected && selectedLanguages.length >= 2;
 
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _buildLanguageTile(
-                name: language['name']!,
-                script: language['script']!,
-                icon: language['icon']!,
-                isSelected: isSelected,
-                isDisabled: isDisabled,
-                onTap: () {
-                  if (isSelected) {
-                    onLanguageDeselected(language['name']!);
-                  } else if (!isDisabled) {
-                    onLanguageSelected(language['name']!);
-                  }
-                },
-              ),
-            );
-          },
-        ),
-      ],
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: _buildLanguageTile(
+            name: language['name']!,
+            script: language['script']!,
+            icon: language['icon']!,
+            isSelected: isSelected,
+            isDisabled: isDisabled,
+            onTap: () {
+              if (isSelected) {
+                onLanguageDeselected(language['name']!);
+              } else if (!isDisabled) {
+                onLanguageSelected(language['name']!);
+              }
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -89,25 +67,32 @@ class LanguageSelectionWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.white,
+          color: Colors.white,
           border: Border.all(
             color: isSelected ? AppColors.primary : AppColors.borderLight,
-            width: 2,
+            width: isSelected ? 2 : 1,
           ),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.2),
-                    blurRadius: 8,
-                  ),
-                ]
-              : null,
         ),
         child: Row(
           children: [
-            Text(icon, style: const TextStyle(fontSize: 32)),
+            // Circular icon container
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.greyLight,
+              ),
+              child: Center(
+                child: Text(
+                  icon,
+                  style: const TextStyle(fontSize: 28),
+                ),
+              ),
+            ),
             const SizedBox(width: 16),
+            // Language name and script
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,44 +101,18 @@ class LanguageSelectionWidget extends StatelessWidget {
                     text: name,
                     fontSize: 16,
                     fontWeight: FontWeightType.semiBold,
-                    color: isSelected ? Colors.white : AppColors.textPrimary,
+                    color: AppColors.textPrimary,
                   ),
                   const SizedBox(height: 4),
                   CustomText(
                     text: script,
-                    fontSize: 12,
+                    fontSize: 14,
                     fontWeight: FontWeightType.regular,
-                    color: isSelected
-                        ? Colors.white.withOpacity(0.8)
-                        : AppColors.textSecondary,
+                    color: AppColors.textSecondary,
                   ),
                 ],
               ),
             ),
-            if (isSelected)
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.check,
-                  color: AppColors.primary,
-                  size: 16,
-                ),
-              )
-            else
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: isDisabled ? AppColors.buttonDisabled : Colors.white,
-                  border: Border.all(color: AppColors.borderLight, width: 2),
-                  shape: BoxShape.circle,
-                ),
-              ),
           ],
         ),
       ),
