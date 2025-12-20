@@ -1,30 +1,134 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/constants/custom_text.dart';
+import '../bloc/profile_setup_bloc.dart';
+import '../bloc/profile_setup_event.dart';
+import '../bloc/profile_setup_state.dart';
+import '../screens/set_profile_screen.dart';
+import '../screens/date_of_birth_screen.dart';
+import '../screens/languages_selection_screen.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        title: const CustomText(
-          text: 'Profile Setup',
-          fontSize: 18,
-          fontWeight: FontWeightType.medium,
-          color: AppColors.white,
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onContinueFromScreen1() {
+    context.read<ProfileSetupBloc>().add(const ProfileScreenProgressed(1));
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onContinueFromScreen2() {
+    context.read<ProfileSetupBloc>().add(const ProfileScreenProgressed(2));
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onBackFromScreen2() {
+    context.read<ProfileSetupBloc>().add(const ProfileScreenProgressed(0));
+    _pageController.previousPage(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onBackFromScreen3() {
+    context.read<ProfileSetupBloc>().add(const ProfileScreenProgressed(1));
+    _pageController.previousPage(
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onFinishProfileSetup() {
+    // Complete the profile setup
+    context.read<ProfileSetupBloc>().add(const ProfileSetupCompleted());
+
+    // Show success message or navigate to next screen
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: CustomText(
+          text: 'Profile setup completed!',
+          color: Colors.white,
         ),
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
+        backgroundColor: AppColors.success,
+        duration: Duration(seconds: 2),
       ),
-      body: const Center(
-        child: CustomText(
-          text: 'Profile Setup Screen\n(Coming Soon)',
-          textAlign: TextAlign.center,
-          fontSize: 18,
-          color: AppColors.textPrimary,
+    );
+
+    // Navigate to home/dashboard after a short delay
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        context.go('/'); // Navigate to home or dashboard
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          ProfileSetupBloc()..add(const ProfileSetupInitiated()),
+      child: BlocListener<ProfileSetupBloc, ProfileSetupState>(
+        listener: (context, state) {
+          if (state.errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: CustomText(
+                  text: state.errorMessage!,
+                  color: Colors.white,
+                ),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: AppColors.white,
+          body: SafeArea(
+            child: PageView(
+              controller: _pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                // Screen 1: Set Profile (Name, Gender, Avatar)
+                SetProfileScreen(onContinue: _onContinueFromScreen1),
+                // Screen 2: Date of Birth
+                DateOfBirthScreen(
+                  onContinue: _onContinueFromScreen2,
+                  onBack: _onBackFromScreen2,
+                ),
+                // Screen 3: Languages Selection
+                LanguagesSelectionScreen(
+                  onFinish: _onFinishProfileSetup,
+                  onBack: _onBackFromScreen3,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

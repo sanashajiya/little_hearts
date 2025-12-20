@@ -74,7 +74,7 @@ class _OnboardingImageSliderState extends State<OnboardingImageSlider> {
               final content = widget.contents[index];
               return Column(
                 children: [
-                  const SizedBox(height: 140),
+                  const SizedBox(height: 120),
                   // Title
                   CustomText(
                     text: content.title,
