@@ -68,7 +68,7 @@ class LanguagesSelectionScreen extends StatelessWidget {
                     text: 'Connect with Friends Who Speak Your Language',
                     fontSize: 14,
                     fontWeight: FontWeightType.regular,
-                    color: AppColors.textSecondary,
+                    color: AppColors.black,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -76,9 +76,9 @@ class LanguagesSelectionScreen extends StatelessWidget {
                 const Center(
                   child: CustomText(
                     text: 'you can select up to 2 languages',
-                    fontSize: 14,
+                    fontSize: 12,
                     fontWeight: FontWeightType.regular,
-                    color: AppColors.textSecondary,
+                    color: AppColors.black,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -98,7 +98,7 @@ class LanguagesSelectionScreen extends StatelessWidget {
                         );
                   },
                 ),
-                const SizedBox(height: 48),
+                const SizedBox(height: 14),
 
                 // Finish Button
                 Padding(

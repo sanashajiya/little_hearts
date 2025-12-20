@@ -3,6 +3,23 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 
+/// Custom scroll physics for smoother date picker scrolling
+class SmoothFixedExtentScrollPhysics extends FixedExtentScrollPhysics {
+  const SmoothFixedExtentScrollPhysics({super.parent});
+
+  @override
+  SmoothFixedExtentScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return SmoothFixedExtentScrollPhysics(parent: buildParent(ancestor));
+  }
+
+  @override
+  SpringDescription get spring => const SpringDescription(
+        mass: 0.5,
+        stiffness: 100.0,
+        damping: 0.8,
+      );
+}
+
 class DateOfBirthPickerWidget extends StatefulWidget {
   final DateTime? selectedDate;
   final Function(DateTime) onDateSelected;
@@ -91,63 +108,72 @@ class _DateOfBirthPickerWidgetState extends State<DateOfBirthPickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildNumberPicker(
-          label: 'Day',
-          controller: _dayController,
-          selectedValue: _selectedDay,
-          minValue: 1,
-          maxValue: 31,
-          onChanged: (day) {
-            setState(() {
-              _selectedDay = day;
-              _updateDate();
-            });
-          },
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.borderLight,
+          width: 1,
         ),
-        const SizedBox(width: 24),
-        _buildNumberPicker(
-          label: 'Month',
-          controller: _monthController,
-          selectedValue: _selectedMonth,
-          minValue: 1,
-          maxValue: 12,
-          onChanged: (month) {
-            setState(() {
-              _selectedMonth = month;
-              // Validate day for the new month
-              final lastDayOfMonth = DateTime(_selectedYear, month + 1, 0).day;
-              if (_selectedDay > lastDayOfMonth) {
-                _selectedDay = lastDayOfMonth;
-                _dayController.jumpToItem(_selectedDay - 1);
-              }
-              _updateDate();
-            });
-          },
-        ),
-        const SizedBox(width: 24),
-        _buildNumberPicker(
-          label: 'Year',
-          controller: _yearController,
-          selectedValue: _selectedYear,
-          minValue: 1950,
-          maxValue: DateTime.now().year - 13,
-          onChanged: (year) {
-            setState(() {
-              _selectedYear = year;
-              // Validate day for the new year (leap year handling)
-              final lastDayOfMonth = DateTime(year, _selectedMonth + 1, 0).day;
-              if (_selectedDay > lastDayOfMonth) {
-                _selectedDay = lastDayOfMonth;
-                _dayController.jumpToItem(_selectedDay - 1);
-              }
-              _updateDate();
-            });
-          },
-        ),
-      ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildNumberPicker(
+            label: 'Day',
+            controller: _dayController,
+            selectedValue: _selectedDay,
+            minValue: 1,
+            maxValue: 31,
+            onChanged: (day) {
+              setState(() {
+                _selectedDay = day;
+                _updateDate();
+              });
+            },
+          ),
+          _buildNumberPicker(
+            label: 'Month',
+            controller: _monthController,
+            selectedValue: _selectedMonth,
+            minValue: 1,
+            maxValue: 12,
+            onChanged: (month) {
+              setState(() {
+                _selectedMonth = month;
+                // Validate day for the new month
+                final lastDayOfMonth = DateTime(_selectedYear, month + 1, 0).day;
+                if (_selectedDay > lastDayOfMonth) {
+                  _selectedDay = lastDayOfMonth;
+                  _dayController.jumpToItem(_selectedDay - 1);
+                }
+                _updateDate();
+              });
+            },
+          ),
+          _buildNumberPicker(
+            label: 'Year',
+            controller: _yearController,
+            selectedValue: _selectedYear,
+            minValue: 1950,
+            maxValue: DateTime.now().year - 13,
+            onChanged: (year) {
+              setState(() {
+                _selectedYear = year;
+                // Validate day for the new year (leap year handling)
+                final lastDayOfMonth = DateTime(year, _selectedMonth + 1, 0).day;
+                if (_selectedDay > lastDayOfMonth) {
+                  _selectedDay = lastDayOfMonth;
+                  _dayController.jumpToItem(_selectedDay - 1);
+                }
+                _updateDate();
+              });
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -172,11 +198,11 @@ class _DateOfBirthPickerWidgetState extends State<DateOfBirthPickerWidget> {
         const SizedBox(height: 8),
         SizedBox(
           width: 70,
-          height: 180,
+          height: 150,
           child: ListWheelScrollView.useDelegate(
             controller: controller,
             itemExtent: 50,
-            physics: const FixedExtentScrollPhysics(),
+            physics: const SmoothFixedExtentScrollPhysics(),
             onSelectedItemChanged: (index) {
               final value = minValue + index;
               onChanged(value);
@@ -184,6 +210,8 @@ class _DateOfBirthPickerWidgetState extends State<DateOfBirthPickerWidget> {
             perspective: 0.003,
             diameterRatio: 1.2,
             useMagnifier: false,
+            offAxisFraction: 0.0,
+            squeeze: 0.8,
             childDelegate: ListWheelChildBuilderDelegate(
               childCount: itemCount,
               builder: (context, index) {

@@ -14,12 +14,33 @@ class LanguageSelectionWidget extends StatelessWidget {
     required this.onLanguageDeselected,
   });
 
+  // ✅ Updated: icon replaced with asset path
   final List<Map<String, String>> languages = const [
-    {'name': 'Telugu', 'script': 'తెలుగు', 'icon': '🏞️'},
-    {'name': 'Kannada', 'script': 'ಕನ್ನಡ', 'icon': '🏛️'},
-    {'name': 'Hindi', 'script': 'हिन्दी', 'icon': '🏯'},
-    {'name': 'English', 'script': 'ఆంగ్లం', 'icon': '🗽'},
-    {'name': 'Tamil', 'script': 'தமிழ்', 'icon': '🏰'},
+    {
+      'name': 'Telugu',
+      'script': 'తెలుగు',
+      'asset': 'assets/images/telugu.png',
+    },
+    {
+      'name': 'Kannada',
+      'script': 'ಕನ್ನಡ',
+      'asset': 'assets/images/kannada.png',
+    },
+    {
+      'name': 'Hindi',
+      'script': 'हिन्दी',
+      'asset': 'assets/images/hindi.png',
+    },
+    {
+      'name': 'English',
+      'script': 'English',
+      'asset': 'assets/images/english.png',
+    },
+    {
+      'name': 'Tamil',
+      'script': 'தமிழ்',
+      'asset': 'assets/images/tamil.png',
+    },
   ];
 
   @override
@@ -38,7 +59,7 @@ class LanguageSelectionWidget extends StatelessWidget {
           child: _buildLanguageTile(
             name: language['name']!,
             script: language['script']!,
-            icon: language['icon']!,
+            assetPath: language['asset']!,
             isSelected: isSelected,
             isDisabled: isDisabled,
             onTap: () {
@@ -57,7 +78,7 @@ class LanguageSelectionWidget extends StatelessWidget {
   Widget _buildLanguageTile({
     required String name,
     required String script,
-    required String icon,
+    required String assetPath,
     required bool isSelected,
     required bool isDisabled,
     required VoidCallback onTap,
@@ -76,7 +97,7 @@ class LanguageSelectionWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Circular icon container
+            // ✅ Circular image container
             Container(
               width: 50,
               height: 50,
@@ -84,14 +105,18 @@ class LanguageSelectionWidget extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: AppColors.greyLight,
               ),
-              child: Center(
-                child: Text(
-                  icon,
-                  style: const TextStyle(fontSize: 28),
+              child: ClipOval(
+
+                child: Image.asset(
+                  assetPath,
+                  fit: BoxFit.cover,
+                   width: 50,
+      height: 50,
                 ),
               ),
             ),
             const SizedBox(width: 16),
+
             // Language name and script
             Expanded(
               child: Column(

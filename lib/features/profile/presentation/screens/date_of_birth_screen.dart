@@ -79,26 +79,29 @@ class DateOfBirthScreen extends StatelessWidget {
                 Center(
                   child: Image.asset(
                     'assets/images/birthday.png',
-                    height: 200,
+                    height: 220,
                     fit: BoxFit.contain,
                   ),
                 ),
                 const SizedBox(height: 32),
 
                 // Date of Birth Picker
-                DateOfBirthPickerWidget(
-                  selectedDate: state.dateOfBirth ?? DateTime(1993, 4, 27),
-                  onDateSelected: (date) {
-                    context.read<ProfileSetupBloc>().add(
-                      DateOfBirthChanged(date),
-                    );
-                  },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DateOfBirthPickerWidget(
+                    selectedDate: state.dateOfBirth ?? DateTime(1993, 4, 27),
+                    onDateSelected: (date) {
+                      context.read<ProfileSetupBloc>().add(
+                        DateOfBirthChanged(date),
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: 48),
 
                 // Continue Button
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: SizedBox(
                     width: double.infinity,
                     height: 52,
