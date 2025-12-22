@@ -71,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
     bloc.add(const ProfileSetupCompleted());
 
     // Navigate directly to Home and clear the navigation stack
+    // Pass showCompletionDialog flag to show the dialog on home screen
     if (mounted) {
       final state = bloc.state;
       blocContext.go(
@@ -78,6 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
         extra: {
           'username': state.username,
           'gender': state.gender,
+          'showCompletionDialog': true,
         },
       );
     }

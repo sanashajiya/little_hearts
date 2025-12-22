@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/app_mediaquery.dart';
+import '../../../profile/presentation/widgets/profile_completion_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   final String userName;
   final String? gender;
+  final bool showCompletionDialog;
 
-  const HomeScreen({super.key, required this.userName, this.gender});
+  const HomeScreen({
+    super.key,
+    required this.userName,
+    this.gender,
+    this.showCompletionDialog = false,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,6 +34,20 @@ class _HomeScreenState extends State<HomeScreen> {
     _bannerController = PageController(
       viewportFraction: 0.88, // ⭐ KEY LINE (controls side spacing)
     );
+
+    // Show completion dialog after the first frame is rendered
+    if (widget.showCompletionDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          ProfileCompletionDialog.show(
+            context,
+            onContinue: () {
+              // Dialog will close automatically, no action needed
+            },
+          );
+        }
+      });
+    }
   }
 
   @override
@@ -329,7 +352,10 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Friend Zone',
             asset: 'assets/images/friend_zone.png',
             onTap: () {
-              // TODO: Dispatch Friend Zone navigation event via Bloc
+              // Only male users can access Friend Zone Explore
+              if (!_isFemale) {
+                context.go('/explore');
+              }
             },
           ),
           _zoneCard(
