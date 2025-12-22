@@ -21,17 +21,23 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     return _random.nextBool() ? CallType.audio : CallType.video;
   }
 
+  UserStatus _getRandomStatus() {
+    final statuses = UserStatus.values;
+    return statuses[_random.nextInt(statuses.length)];
+  }
+
   void _onInitialized(
     ExploreInitialized event,
     Emitter<ExploreState> emit,
   ) {
-    // Static data with random call types; later can be replaced with repository calls.
+    // Static data with random call types and statuses; later can be replaced with repository calls.
     final gIcons = [
       GIcon(
         name: 'Meghana',
         age: 26,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon1.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -39,6 +45,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 27,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon2.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -46,6 +53,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 22,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon3.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -53,6 +61,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 25,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon4.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -60,6 +69,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 29,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon5.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -67,6 +77,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 24,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon6.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -74,6 +85,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 23,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon7.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GIcon(
@@ -81,6 +93,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 28,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gicon8.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
     ];
@@ -91,6 +104,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 26,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gstar1.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GStar(
@@ -98,6 +112,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 28,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gstar2.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GStar(
@@ -105,6 +120,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 22,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gstar3.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
       GStar(
@@ -112,6 +128,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         age: 28,
         location: 'Hyderabad',
         imageAsset: 'assets/images/gstar4.png',
+        status: _getRandomStatus(),
         callType: _getRandomCallType(),
       ),
     ];

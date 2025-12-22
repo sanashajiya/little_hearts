@@ -5,7 +5,7 @@ class GStar {
   final int age;
   final String location;
   final String imageAsset;
-  final bool isOnline;
+  final UserStatus status;
   final CallType callType;
 
   const GStar({
@@ -13,7 +13,7 @@ class GStar {
     required this.age,
     required this.location,
     required this.imageAsset,
-    this.isOnline = true,
+    this.status = UserStatus.online,
     this.callType = CallType.audio,
   });
 }

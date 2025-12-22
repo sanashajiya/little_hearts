@@ -109,7 +109,7 @@ class GIconCard extends StatelessWidget {
         ),
         
       ),
-      // ✅ Green Online Dot
+      // ✅ Status Dot
         Positioned(
           top: 8,
           right: 8,
@@ -117,7 +117,7 @@ class GIconCard extends StatelessWidget {
             width: 10,
             height: 10,
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: _getStatusColor(gIcon.status),
               shape: BoxShape.circle,
               border: Border.all(
                 color: Colors.white,
@@ -128,5 +128,16 @@ class GIconCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Color _getStatusColor(UserStatus status) {
+    switch (status) {
+      case UserStatus.online:
+        return Colors.green;
+      case UserStatus.offline:
+        return Colors.grey;
+      case UserStatus.busy:
+        return Colors.orange;
+    }
   }
 }

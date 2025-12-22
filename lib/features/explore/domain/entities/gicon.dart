@@ -3,12 +3,18 @@ enum CallType {
   video,
 }
 
+enum UserStatus {
+  online,
+  offline,
+  busy,
+}
+
 class GIcon {
   final String name;
   final int age;
   final String location;
   final String imageAsset;
-  final bool isOnline;
+  final UserStatus status;
   final CallType callType;
 
   const GIcon({
@@ -16,7 +22,7 @@ class GIcon {
     required this.age,
     required this.location,
     required this.imageAsset,
-    this.isOnline = true,
+    this.status = UserStatus.online,
     this.callType = CallType.audio,
   });
 }
