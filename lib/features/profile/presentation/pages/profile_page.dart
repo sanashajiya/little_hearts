@@ -67,26 +67,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _onFinishProfileSetup(BuildContext blocContext) {
     // Complete the profile setup
-    blocContext.read<ProfileSetupBloc>().add(const ProfileSetupCompleted());
+    final bloc = blocContext.read<ProfileSetupBloc>();
+    bloc.add(const ProfileSetupCompleted());
 
-    // Show success message or navigate to next screen
-    ScaffoldMessenger.of(blocContext).showSnackBar(
-      const SnackBar(
-        content: CustomText(
-          text: 'Profile setup completed!',
-          color: Colors.white,
-        ),
-        backgroundColor: AppColors.success,
-        duration: Duration(seconds: 2),
-      ),
-    );
-
-    // Navigate to home/dashboard after a short delay
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        blocContext.go('/'); // Navigate to home or dashboard
-      }
-    });
+    // Navigate directly to Home and clear the navigation stack
+    if (mounted) {
+      final state = bloc.state;
+      blocContext.go(
+        '/home',
+        extra: {
+          'username': state.username,
+          'gender': state.gender,
+        },
+      );
+    }
   }
 
   @override
