@@ -9,6 +9,9 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
   ExploreBloc() : super(const ExploreState()) {
     on<ExploreInitialized>(_onInitialized);
     on<ExploreFilterChanged>(_onFilterChanged);
+    on<ShowAllGIcons>(_onShowAllGIcons);
+    on<ShowAllGStars>(_onShowAllGStars);
+    on<ShowInitialView>(_onShowInitialView);
   }
 
   void _onInitialized(
@@ -107,6 +110,27 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     Emitter<ExploreState> emit,
   ) {
     emit(state.copyWith(currentFilter: event.filter));
+  }
+
+  void _onShowAllGIcons(
+    ShowAllGIcons event,
+    Emitter<ExploreState> emit,
+  ) {
+    emit(state.copyWith(viewMode: ExploreViewMode.allGIcons));
+  }
+
+  void _onShowAllGStars(
+    ShowAllGStars event,
+    Emitter<ExploreState> emit,
+  ) {
+    emit(state.copyWith(viewMode: ExploreViewMode.allGStars));
+  }
+
+  void _onShowInitialView(
+    ShowInitialView event,
+    Emitter<ExploreState> emit,
+  ) {
+    emit(state.copyWith(viewMode: ExploreViewMode.initial));
   }
 }
 

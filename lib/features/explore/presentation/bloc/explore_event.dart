@@ -15,8 +15,10 @@ class ExploreFilterChanged extends ExploreEvent {
   ExploreFilterChanged(this.filter);
 }
 
-class ExploreGIconsViewMoreRequested extends ExploreEvent {}
+class ShowAllGIcons extends ExploreEvent {}
 
-class ExploreGStarsViewMoreRequested extends ExploreEvent {}
+class ShowAllGStars extends ExploreEvent {}
+
+class ShowInitialView extends ExploreEvent {}
 
 

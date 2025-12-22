@@ -46,11 +46,21 @@ class _ExploreView extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
-                child: ExploreAppBar(
-                  onBack: () => context.pop(),
-                ),
+              BlocBuilder<ExploreBloc, ExploreState>(
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
+                    child: ExploreAppBar(
+                      onBack: () {
+                        if (state.viewMode != ExploreViewMode.initial) {
+                          context.read<ExploreBloc>().add(ShowInitialView());
+                        } else {
+                          context.pop();
+                        }
+                      },
+                    ),
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -61,6 +71,7 @@ class _ExploreView extends StatelessWidget {
               Expanded(
                 child: Container(
                   decoration: const BoxDecoration(
+                    // color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32),
@@ -68,14 +79,14 @@ class _ExploreView extends StatelessWidget {
                   ),
                   child: BlocBuilder<ExploreBloc, ExploreState>(
                     builder: (context, state) {
-                      return ListView(
-                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
-                        children: [
-                          _buildGIconsSection(context, state.gIcons),
-                          const SizedBox(height: 24),
-                          _buildGStarsSection(context, state.gStars),
-                        ],
-                      );
+                      switch (state.viewMode) {
+                        case ExploreViewMode.allGIcons:
+                          return _buildAllGIconsView(context, state);
+                        case ExploreViewMode.allGStars:
+                          return _buildAllGStarsView(context, state);
+                        case ExploreViewMode.initial:
+                          return _buildInitialView(context, state);
+                      }
                     },
                   ),
                 ),
@@ -90,6 +101,145 @@ class _ExploreView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildInitialView(BuildContext context, ExploreState state) {
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 100),
+      children: [
+        _buildGIconsSection(context, state.gIcons),
+        const SizedBox(height: 24),
+        _buildGStarsSection(context, state.gStars),
+      ],
+    );
+  }
+
+  Widget _buildAllGIconsView(BuildContext context, ExploreState state) {
+    return Column(
+      children: [
+        // Header with back button
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+                onPressed: () {
+                  context.read<ExploreBloc>().add(ShowInitialView());
+                },
+              ),
+              const Text(
+                'GIcons',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const Spacer(),
+              PopupMenuButton<ExploreFilter>(
+                icon: const Icon(Icons.filter_list, color: AppColors.textPrimary),
+                position: PopupMenuPosition.under,
+                onSelected: (filter) {
+                  context.read<ExploreBloc>().add(ExploreFilterChanged(filter));
+                },
+                itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: ExploreFilter.mostRelevant,
+                    child: Text('Most Relevant'),
+                  ),
+                  PopupMenuItem(
+                    value: ExploreFilter.online,
+                    child: Text('Online'),
+                  ),
+                  PopupMenuItem(
+                    value: ExploreFilter.offline,
+                    child: Text('Offline'),
+                  ),
+                  PopupMenuItem(
+                    value: ExploreFilter.nearby,
+                    child: Text('Near by'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        // All GIcons Grid
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemCount: state.gIcons.length,
+              itemBuilder: (context, index) {
+                final gIcon = state.gIcons[index];
+                return GIconCard(
+                  gIcon: gIcon,
+                  onJoin: () {},
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAllGStarsView(BuildContext context, ExploreState state) {
+    return Column(
+      children: [
+        // Header with back button
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+                onPressed: () {
+                  context.read<ExploreBloc>().add(ShowInitialView());
+                },
+              ),
+              const Text(
+                'GStars',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+        ),
+        // All GStars Grid
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.65,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemCount: state.gStars.length,
+              itemBuilder: (context, index) {
+                final gStar = state.gStars[index];
+                return GStarCard(
+                  gStar: gStar,
+                  onJoin: () {},
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -152,14 +302,7 @@ class _ExploreView extends StatelessWidget {
                 context,
                 title: 'See More\nProfile',
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => ExploreSeeMoreScreen(
-                        title: 'GIcons',
-                        isGIcons: true,
-                      ),
-                    ),
-                  );
+                  context.read<ExploreBloc>().add(ShowAllGIcons());
                 },
               );
             }
@@ -191,14 +334,7 @@ class _ExploreView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => ExploreSeeMoreScreen(
-                      title: 'GStars',
-                      isGIcons: false,
-                    ),
-                  ),
-                );
+                context.read<ExploreBloc>().add(ShowAllGStars());
               },
               child: const Text(
                 'View More',
@@ -263,75 +399,5 @@ class _ExploreView extends StatelessWidget {
   }
 }
 
-class ExploreSeeMoreScreen extends StatelessWidget {
-  final String title;
-  final bool isGIcons;
-
-  const ExploreSeeMoreScreen({
-    super.key,
-    required this.title,
-    required this.isGIcons,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final bloc = context.read<ExploreBloc>();
-    final state = bloc.state;
-
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.friendModeLight,
-        elevation: 0,
-        title: Text(title),
-      ),
-      body: Container(
-        color: AppColors.friendModeLight,
-        child: Container(
-          decoration: const BoxDecoration(
-            color: AppColors.friendModeLight,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
-            ),
-          ),
-          padding: const EdgeInsets.all(16),
-          child: isGIcons
-              ? GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                  ),
-                  itemCount: state.gIcons.length,
-                  itemBuilder: (context, index) {
-                    final gIcon = state.gIcons[index];
-                    return GIconCard(
-                      gIcon: gIcon,
-                      onJoin: () {},
-                    );
-                  },
-                )
-              : GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.65,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                  ),
-                  itemCount: state.gStars.length,
-                  itemBuilder: (context, index) {
-                    final gStar = state.gStars[index];
-                    return GStarCard(
-                      gStar: gStar,
-                      onJoin: () {},
-                    );
-                  },
-                ),
-        ),
-      ),
-    );
-  }
-}
 
 
