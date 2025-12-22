@@ -3,6 +3,7 @@ import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/explore/presentation/screens/explore_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -25,6 +26,7 @@ final appRouter = GoRouter(
         final extra = state.extra;
         var userName = 'User';
         String? gender;
+        bool showCompletionDialog = false;
         if (extra is Map) {
           final untypedMap = extra.cast<dynamic, dynamic>();
           final fromExtra = (untypedMap['username'] as String?)?.trim();
@@ -32,12 +34,18 @@ final appRouter = GoRouter(
             userName = fromExtra;
           }
           gender = untypedMap['gender'] as String?;
+          showCompletionDialog = untypedMap['showCompletionDialog'] as bool? ?? false;
         }
         return HomeScreen(
           userName: userName,
           gender: gender,
+          showCompletionDialog: showCompletionDialog,
         );
       },
+    ),
+    GoRoute(
+      path: '/explore',
+      builder: (context, state) => const ExploreScreen(),
     ),
   ],
 );
