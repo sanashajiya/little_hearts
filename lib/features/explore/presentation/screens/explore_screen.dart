@@ -341,7 +341,7 @@ class _ExploreView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.textLink,
+                  color: AppColors.friendModeDark,
                 ),
               ),
             ),

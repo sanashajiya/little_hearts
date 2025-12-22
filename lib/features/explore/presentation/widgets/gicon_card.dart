@@ -84,14 +84,16 @@ class GIconCard extends StatelessWidget {
                 onPressed: onJoin,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
-                      Icons.mic_none,
+                      gIcon.callType == CallType.audio
+                          ? Icons.mic_none
+                          : Icons.videocam,
                       size: 14,
                       color: Colors.white,
                     ),
-                    SizedBox(width: 4),
-                    CustomText(
+                    const SizedBox(width: 4),
+                    const CustomText(
                       text: 'Join',
                       fontSize: 11,
                       fontWeight: FontWeightType.bold,

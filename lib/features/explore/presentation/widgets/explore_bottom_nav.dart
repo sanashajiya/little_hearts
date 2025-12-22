@@ -80,7 +80,7 @@ class ExploreBottomNav extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withOpacity(0.3),
+                      color: AppColors.friendModeDark,
                       blurRadius: 12,
                       offset: const Offset(0, 6),
                     ),
@@ -117,7 +117,7 @@ class ExploreBottomNav extends StatelessWidget {
     required bool isSelected,
     required VoidCallback onTap,
   }) {
-    final color = isSelected ? AppColors.primary : AppColors.textSecondary;
+    final color = isSelected ? AppColors.friendModeDark : AppColors.textSecondary;
     return GestureDetector(
       onTap: onTap,
       child: Column(
