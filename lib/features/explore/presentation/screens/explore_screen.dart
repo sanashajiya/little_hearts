@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/bottom_navigation_bar.dart';
 import '../../domain/entities/gicon.dart';
 import '../../domain/entities/gstar.dart';
 import '../bloc/explore_bloc.dart';
 import '../bloc/explore_event.dart';
 import '../bloc/explore_state.dart';
 import '../widgets/explore_app_bar.dart';
-import '../widgets/explore_bottom_nav.dart';
 import '../widgets/explore_search_bar.dart';
 import '../widgets/gicon_card.dart';
 import '../widgets/gstar_card.dart';
@@ -33,16 +33,16 @@ class _ExploreView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:  BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            AppColors.friendModeDark.withOpacity(0.99),
-            AppColors.friendModeLight.withOpacity(0.5),
-          ],
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.friendModeDark.withOpacity(0.99),
+              AppColors.friendModeLight.withOpacity(0.5),
+            ],
+          ),
         ),
-      ),
         child: SafeArea(
           child: Column(
             children: [
@@ -64,9 +64,7 @@ class _ExploreView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                child: ExploreSearchBar(
-                  onChanged: (_) {},
-                ),
+                child: ExploreSearchBar(onChanged: (_) {}),
               ),
               Expanded(
                 child: Container(
@@ -91,12 +89,7 @@ class _ExploreView extends StatelessWidget {
                   ),
                 ),
               ),
-              ExploreBottomNav(
-                onHomeTap: () => context.go('/home'),
-                onExploreTap: () {},
-                onRecentsTap: () {},
-                onProfileTap: () {},
-              ),
+              const AppBottomNavigationBar(selectedItem: BottomNavItem.explore),
             ],
           ),
         ),
@@ -139,7 +132,10 @@ class _ExploreView extends StatelessWidget {
               ),
               const Spacer(),
               PopupMenuButton<ExploreFilter>(
-                icon: const Icon(Icons.filter_list, color: AppColors.textPrimary),
+                icon: const Icon(
+                  Icons.filter_list,
+                  color: AppColors.textPrimary,
+                ),
                 position: PopupMenuPosition.under,
                 onSelected: (filter) {
                   context.read<ExploreBloc>().add(ExploreFilterChanged(filter));
@@ -180,10 +176,7 @@ class _ExploreView extends StatelessWidget {
               itemCount: state.gIcons.length,
               itemBuilder: (context, index) {
                 final gIcon = state.gIcons[index];
-                return GIconCard(
-                  gIcon: gIcon,
-                  onJoin: () {},
-                );
+                return GIconCard(gIcon: gIcon, onJoin: () {});
               },
             ),
           ),
@@ -231,10 +224,7 @@ class _ExploreView extends StatelessWidget {
               itemCount: state.gStars.length,
               itemBuilder: (context, index) {
                 final gStar = state.gStars[index];
-                return GStarCard(
-                  gStar: gStar,
-                  onJoin: () {},
-                );
+                return GStarCard(gStar: gStar, onJoin: () {});
               },
             ),
           ),
@@ -307,10 +297,7 @@ class _ExploreView extends StatelessWidget {
               );
             }
             final gIcon = gIcons[index];
-            return GIconCard(
-              gIcon: gIcon,
-              onJoin: () {},
-            );
+            return GIconCard(gIcon: gIcon, onJoin: () {});
           },
         ),
       ],
@@ -360,10 +347,7 @@ class _ExploreView extends StatelessWidget {
           itemCount: gStars.length,
           itemBuilder: (context, index) {
             final gStar = gStars[index];
-            return GStarCard(
-              gStar: gStar,
-              onJoin: () {},
-            );
+            return GStarCard(gStar: gStar, onJoin: () {});
           },
         ),
       ],
@@ -398,6 +382,3 @@ class _ExploreView extends StatelessWidget {
     );
   }
 }
-
-
-
