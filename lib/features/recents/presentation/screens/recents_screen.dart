@@ -20,8 +20,9 @@ class RecentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => RecentsBloc(repository: RecentsRepositoryImpl())
-        ..add(const RecentsInitialized()),
+      create: (_) =>
+          RecentsBloc(repository: RecentsRepositoryImpl())
+            ..add(const RecentsInitialized()),
       child: const _RecentsView(),
     );
   }
@@ -38,10 +39,7 @@ class _RecentsView extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              AppColors.friendMode,
-              AppColors.white,
-            ],
+            colors: [AppColors.friendMode, AppColors.white],
           ),
         ),
         child: SafeArea(
@@ -50,28 +48,55 @@ class _RecentsView extends StatelessWidget {
                 prev.isCalendarVisible != current.isCalendarVisible,
             listener: (context, state) async {
               if (state.isCalendarVisible) {
-                final highlightedDates =
-                    state.calls.map((e) => DateTime(e.dateTime.year, e.dateTime.month, e.dateTime.day)).toSet();
                 await showModalBottomSheet<void>(
                   context: context,
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
                   builder: (ctx) {
-                    return RecentsCalendarSheet(
-                      month: state.currentMonth,
-                      selectedDate: state.selectedDate,
-                      highlightedDates: highlightedDates,
-                      onDateSelected: (date) {
-                        context
-                            .read<RecentsBloc>()
-                            .add(RecentsDateSelected(date));
-                        Navigator.of(ctx).pop();
-                      },
+                    // Use BlocBuilder so the sheet rebuilds when month changes
+                    return BlocProvider.value(
+                      value: context.read<RecentsBloc>(),
+                      child: BlocBuilder<RecentsBloc, RecentsState>(
+                        builder: (ctx, sheetState) {
+                          final highlightedDates = sheetState.calls
+                              .map(
+                                (e) => DateTime(
+                                  e.dateTime.year,
+                                  e.dateTime.month,
+                                  e.dateTime.day,
+                                ),
+                              )
+                              .toSet();
+
+                          return RecentsCalendarSheet(
+                            month: sheetState.currentMonth,
+                            selectedDate: sheetState.selectedDate,
+                            highlightedDates: highlightedDates,
+                            onDateSelected: (date) {
+                              ctx.read<RecentsBloc>().add(
+                                RecentsDateSelected(date),
+                              );
+                            },
+                            onPreviousMonth: () {
+                              ctx.read<RecentsBloc>().add(
+                                const RecentsMonthChanged(isNext: false),
+                              );
+                            },
+                            onNextMonth: () {
+                              ctx.read<RecentsBloc>().add(
+                                const RecentsMonthChanged(isNext: true),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     );
                   },
                 );
                 if (context.mounted) {
-                  context.read<RecentsBloc>().add(const RecentsCalendarClosed());
+                  context.read<RecentsBloc>().add(
+                    const RecentsCalendarClosed(),
+                  );
                 }
               }
             },
@@ -80,8 +105,10 @@ class _RecentsView extends StatelessWidget {
               children: [
                 // Simple back arrow and title
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
+                  ),
                   child: Row(
                     children: [
                       IconButton(
@@ -106,21 +133,21 @@ class _RecentsView extends StatelessWidget {
                 ),
                 RecentsHeader(
                   balance: 8300,
-                  onRechargeTap: () => context.go('/recharge'),
+                  onRechargeTap: () => context.push('/recharge'),
                 ),
                 BlocBuilder<RecentsBloc, RecentsState>(
                   builder: (context, state) {
                     return RecentsTabs(
                       selectedTab: state.selectedTab,
-                      onTransactionsTap: () => context
-                          .read<RecentsBloc>()
-                          .add(const RecentsTabChanged(RecentsTab.transactions)),
-                      onCallsTap: () => context
-                          .read<RecentsBloc>()
-                          .add(const RecentsTabChanged(RecentsTab.calls)),
-                      onCalendarTap: () => context
-                          .read<RecentsBloc>()
-                          .add(const RecentsCalendarOpened()),
+                      onTransactionsTap: () => context.read<RecentsBloc>().add(
+                        const RecentsTabChanged(RecentsTab.transactions),
+                      ),
+                      onCallsTap: () => context.read<RecentsBloc>().add(
+                        const RecentsTabChanged(RecentsTab.calls),
+                      ),
+                      onCalendarTap: () => context.read<RecentsBloc>().add(
+                        const RecentsCalendarOpened(),
+                      ),
                     );
                   },
                 ),
@@ -136,7 +163,9 @@ class _RecentsView extends StatelessWidget {
                       }
 
                       if (state.selectedTab == RecentsTab.transactions) {
-                        return TransactionList(transactions: state.transactions);
+                        return TransactionList(
+                          transactions: state.transactions,
+                        );
                       } else {
                         return CallHistoryList(calls: state.calls);
                       }
@@ -154,5 +183,3 @@ class _RecentsView extends StatelessWidget {
     );
   }
 }
-
-

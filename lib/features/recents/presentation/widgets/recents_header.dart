@@ -18,8 +18,8 @@ class RecentsHeader extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(horizontal: 26, vertical: 24),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+          margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           decoration: BoxDecoration(
             color: AppColors.friendMode,
             borderRadius: BorderRadius.circular(20),
@@ -29,27 +29,28 @@ class RecentsHeader extends StatelessWidget {
             children: [
               Expanded(
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const CustomText(
                       text: 'Available Coins Balance',
-                      fontSize: 12,
+                      fontSize: 14,
                       fontWeight: FontWeightType.medium,
                       color: AppColors.white,
                     ),
                     const SizedBox(height: 8),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset(
                           'assets/icons/coin.png',
-                          width: 26,
-                          height: 26,
+                          width: 44,
+                          height: 44,
                         ),
                         const SizedBox(width: 8),
                         CustomText(
                           text: balance.toString(),
-                          fontSize: 26,
+                          fontSize: 36,
                           fontWeight: FontWeightType.bold,
                           color: AppColors.white,
                         ),

@@ -15,6 +15,7 @@ class RecentsBloc extends Bloc<RecentsEvent, RecentsState> {
     on<RecentsCalendarOpened>(_onCalendarOpened);
     on<RecentsCalendarClosed>(_onCalendarClosed);
     on<RecentsDateSelected>(_onDateSelected);
+    on<RecentsMonthChanged>(_onMonthChanged);
   }
 
   Future<void> _onInitialized(
@@ -22,8 +23,8 @@ class RecentsBloc extends Bloc<RecentsEvent, RecentsState> {
     Emitter<RecentsState> emit,
   ) async {
     emit(state.copyWith(isLoading: true));
-    final List<TransactionRecord> transactions =
-        await repository.getTransactionHistory();
+    final List<TransactionRecord> transactions = await repository
+        .getTransactionHistory();
     final List<CallRecord> calls = await repository.getCallHistory();
     emit(
       state.copyWith(
@@ -34,10 +35,7 @@ class RecentsBloc extends Bloc<RecentsEvent, RecentsState> {
     );
   }
 
-  void _onTabChanged(
-    RecentsTabChanged event,
-    Emitter<RecentsState> emit,
-  ) {
+  void _onTabChanged(RecentsTabChanged event, Emitter<RecentsState> emit) {
     emit(state.copyWith(selectedTab: event.tab));
   }
 
@@ -55,17 +53,17 @@ class RecentsBloc extends Bloc<RecentsEvent, RecentsState> {
     emit(state.copyWith(isCalendarVisible: false));
   }
 
-  void _onDateSelected(
-    RecentsDateSelected event,
-    Emitter<RecentsState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        selectedDate: event.selectedDate,
-        isCalendarVisible: false,
-      ),
+  void _onDateSelected(RecentsDateSelected event, Emitter<RecentsState> emit) {
+    emit(state.copyWith(selectedDate: event.selectedDate));
+  }
+
+  void _onMonthChanged(RecentsMonthChanged event, Emitter<RecentsState> emit) {
+    final current = state.currentMonth;
+    final nextMonth = DateTime(
+      current.year,
+      current.month + (event.isNext ? 1 : -1),
+      1,
     );
+    emit(state.copyWith(currentMonth: nextMonth));
   }
 }
-
-
