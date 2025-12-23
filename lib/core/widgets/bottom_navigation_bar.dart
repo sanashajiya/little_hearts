@@ -57,9 +57,7 @@ class AppBottomNavigationBar extends StatelessWidget {
                 icon: Icons.history,
                 label: 'Recents',
                 isSelected: selectedItem == BottomNavItem.recents,
-                onTap: () {
-                  // TODO: Navigate to recents
-                },
+                onTap: () => context.go('/recents'),
               ),
               const SizedBox(width: 35),
               _navItem(
@@ -125,7 +123,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     required bool isSelected,
     required VoidCallback onTap,
   }) {
-    final color = isSelected ? AppColors.primary : AppColors.textSecondary;
+    final color = isSelected ? AppColors.friendMode: AppColors.textSecondary;
     return GestureDetector(
       onTap: onTap,
       child: Column(

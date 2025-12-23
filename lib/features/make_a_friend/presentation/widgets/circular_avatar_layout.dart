@@ -172,7 +172,7 @@ class DottedCirclePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = AppColors.white
-      ..strokeWidth = 2
+      ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
     final center = Offset(size.width / 2, size.height / 2);

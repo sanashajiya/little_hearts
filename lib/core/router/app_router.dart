@@ -5,6 +5,8 @@ import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/explore/presentation/screens/explore_screen.dart';
 import '../../features/make_a_friend/presentation/screens/make_a_friend_screen.dart';
+import '../../features/recents/presentation/screens/recents_screen.dart';
+import '../../features/recents/presentation/screens/recharge_screen.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -51,6 +53,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/make-a-friend',
       builder: (context, state) => const MakeAFriendScreen(),
+    ),
+    GoRoute(
+      path: '/recents',
+      builder: (context, state) => const RecentsScreen(),
+    ),
+    GoRoute(
+      path: '/recharge',
+      builder: (context, state) => const RechargeScreen(),
     ),
   ],
 );

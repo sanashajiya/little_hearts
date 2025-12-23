@@ -47,7 +47,7 @@ class MakeAFriendAppBar extends StatelessWidget {
           BlocBuilder<MakeAFriendBloc, MakeAFriendState>(
             builder: (context, state) {
               return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildTab(
                     context: context,
