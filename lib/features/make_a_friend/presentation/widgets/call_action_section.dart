@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 
 class CallActionSection extends StatelessWidget {
   final VoidCallback? onAudioCallTap;
@@ -14,6 +17,9 @@ class CallActionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -22,12 +28,14 @@ class CallActionSection extends StatelessWidget {
           coinCost: 10,
           label: 'Random Audio',
           onTap: onAudioCallTap,
+          theme: theme,
         ),
         _buildCallButton(
           icon: Icons.videocam,
           coinCost: 50,
           label: 'Random Video',
           onTap: onVideoCallTap,
+          theme: theme,
         ),
       ],
     );
@@ -38,6 +46,7 @@ class CallActionSection extends StatelessWidget {
     required int coinCost,
     required String label,
     required VoidCallback? onTap,
+    required ZoneTheme theme,
   }) {
     return Expanded(
       child: GestureDetector(
@@ -63,7 +72,7 @@ class CallActionSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.friendModeDark.withValues(alpha: 0.9),
+                  color: theme.dark.withValues(alpha: 0.9),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(

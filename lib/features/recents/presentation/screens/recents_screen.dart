@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
 import '../../../../core/widgets/bottom_navigation_bar.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../../data/repositories/recents_repository.dart';
 import '../bloc/recents_bloc.dart';
 import '../bloc/recents_event.dart';
@@ -33,13 +35,16 @@ class _RecentsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final zoneTheme = ZoneTheme.fromMode(mode);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.friendMode, AppColors.white],
+            colors: [zoneTheme.primary, AppColors.white],
           ),
         ),
         child: SafeArea(
@@ -117,7 +122,7 @@ class _RecentsView extends StatelessWidget {
                           color: Colors.white,
                           size: 20,
                         ),
-                        onPressed: () => context.go('/home'),
+                        onPressed: () => context.go('/explore'),
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -155,9 +160,9 @@ class _RecentsView extends StatelessWidget {
                   child: BlocBuilder<RecentsBloc, RecentsState>(
                     builder: (context, state) {
                       if (state.isLoading) {
-                        return const Center(
+                        return Center(
                           child: CircularProgressIndicator(
-                            color: AppColors.friendMode,
+                            color: zoneTheme.primary,
                           ),
                         );
                       }

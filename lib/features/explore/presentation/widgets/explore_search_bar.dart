@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/cubit/zone_cubit.dart';
+import '../../../../core/theme/zone_theme.dart';
 
 class ExploreSearchBar extends StatelessWidget {
   final ValueChanged<String>? onChanged;
@@ -9,6 +11,9 @@ class ExploreSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Container(
@@ -20,24 +25,18 @@ class ExploreSearchBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Row(
           children: [
-            const Icon(Icons.search, color: AppColors.friendModeDark, size: 30),
+            Icon(Icons.search, color: theme.dark, size: 30),
             const SizedBox(width: 8),
             Expanded(
               child: TextField(
                 onChanged: onChanged,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: InputBorder.none,
                   isDense: true,
-                  hintText: 'Search Names',
-                  hintStyle: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.friendModeDark,
-                  ),
+                  hintText: 'Search names',
+                  hintStyle: TextStyle(fontSize: 12, color: theme.dark),
                 ),
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.friendModeDark,
-                ),
+                style: TextStyle(fontSize: 14, color: theme.dark),
               ),
             ),
           ],

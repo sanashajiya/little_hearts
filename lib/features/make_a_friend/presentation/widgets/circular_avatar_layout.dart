@@ -1,8 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../../domain/entities/friend_avatar.dart';
 
 class CircularAvatarLayout extends StatelessWidget {
@@ -20,6 +23,9 @@ class CircularAvatarLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return SizedBox(
       width: 280,
       height: 280,
@@ -32,15 +38,15 @@ class CircularAvatarLayout extends StatelessWidget {
             painter: DottedCirclePainter(),
           ),
           // Center avatar (large)
-          _buildCenterAvatar(centerAvatar),
+          _buildCenterAvatar(centerAvatar, theme),
           // Surrounding avatars (5 smaller ones)
-          ..._buildSurroundingAvatars(surroundingAvatars),
+          ..._buildSurroundingAvatars(surroundingAvatars, theme),
         ],
       ),
     );
   }
 
-  Widget _buildCenterAvatar(FriendAvatar avatar) {
+  Widget _buildCenterAvatar(FriendAvatar avatar, ZoneTheme theme) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -50,7 +56,7 @@ class CircularAvatarLayout extends StatelessWidget {
           height: 220,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.friendModeLight.withOpacity(0.15),
+            color: theme.light.withOpacity(0.15),
           ),
         ),
 
@@ -64,13 +70,13 @@ class CircularAvatarLayout extends StatelessWidget {
           ),
         ),
 
-        // BLUE INNER RING
+        // INNER RING – uses dynamic zone color (Friend / Date)
         Container(
           width: 130,
           height: 130,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xFF6EAFF1),
+            color: theme.primary,
           ),
         ),
 
@@ -89,7 +95,10 @@ class CircularAvatarLayout extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildSurroundingAvatars(List<FriendAvatar> avatars) {
+  List<Widget> _buildSurroundingAvatars(
+    List<FriendAvatar> avatars,
+    ZoneTheme theme,
+  ) {
     final int count = math.min(avatars.length, 5);
     final double angleStep = (2 * math.pi) / count;
 
@@ -117,7 +126,7 @@ class CircularAvatarLayout extends StatelessWidget {
               height: _avatarSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.friendModeLight.withOpacity(0.2),
+                color: theme.light.withOpacity(0.2),
               ),
               padding: const EdgeInsets.all(3),
               child: ClipOval(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../bloc/recents_event.dart';
 
 class RecentsTabs extends StatelessWidget {
@@ -20,6 +23,9 @@ class RecentsTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 18),
       child: Column(
@@ -32,12 +38,14 @@ class RecentsTabs extends StatelessWidget {
                 label: 'Transaction History',
                 isSelected: selectedTab == RecentsTab.transactions,
                 onTap: onTransactionsTap,
+                theme: theme,
               ),
               const SizedBox(width: 24),
               _buildTab(
                 label: 'Call History',
                 isSelected: selectedTab == RecentsTab.calls,
                 onTap: onCallsTap,
+                theme: theme,
               ),
               
             ],
@@ -62,6 +70,7 @@ class RecentsTabs extends StatelessWidget {
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
+    required ZoneTheme theme,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -81,7 +90,7 @@ class RecentsTabs extends StatelessWidget {
             width: 90,
             height: 2,
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.friendMode : Colors.transparent,
+              color: isSelected ? theme.primary : Colors.transparent,
               borderRadius: BorderRadius.circular(2),
             ),
           ),

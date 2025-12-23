@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import '../constants/custom_text.dart';
-import '../theme/app_colors.dart';
 
-enum BottomNavItem {
-  home,
-  explore,
-  makeAFriend,
-  recents,
-  profile,
-}
+import '../constants/custom_text.dart';
+import '../cubit/zone_cubit.dart';
+import '../theme/app_colors.dart';
+import '../theme/zone_theme.dart';
+
+enum BottomNavItem { home, explore, makeAFriend, recents, profile }
 
 class AppBottomNavigationBar extends StatelessWidget {
   final BottomNavItem selectedItem;
 
-  const AppBottomNavigationBar({
-    super.key,
-    required this.selectedItem,
-  });
+  const AppBottomNavigationBar({super.key, required this.selectedItem});
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final zoneTheme = ZoneTheme.fromMode(mode);
+
     return Container(
       height: 95,
       decoration: const BoxDecoration(
@@ -73,20 +71,26 @@ class AppBottomNavigationBar extends StatelessWidget {
           Positioned(
             bottom: 8,
             child: GestureDetector(
-              onTap: () => context.go('/make-a-friend'),
+              onTap: () {
+                if (selectedItem == BottomNavItem.makeAFriend) {
+                  return; // already on this screen, do nothing
+                }
+
+                context.push('/make-a-friend', extra: mode);
+              },
               child: Container(
                 width: 85,
                 height: 85,
                 decoration: BoxDecoration(
                   color: selectedItem == BottomNavItem.makeAFriend
-                      ? AppColors.friendMode
-                      : AppColors.friendModeLight,
+                      ? zoneTheme.primary
+                      : zoneTheme.light,
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
                       color: selectedItem == BottomNavItem.makeAFriend
-                          ? AppColors.friendModeDark
-                          : AppColors.friendModeLight,
+                          ? zoneTheme.dark
+                          : zoneTheme.light,
                       blurRadius: 12,
                       offset: const Offset(0, 6),
                     ),
@@ -94,15 +98,21 @@ class AppBottomNavigationBar extends StatelessWidget {
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Image(
-                      image: AssetImage('assets/icons/make_a_frnd.png'),
+                      image: AssetImage(
+                        mode == ZoneMode.date
+                            ? 'assets/icons/plan_a_date.png'
+                            : 'assets/icons/make_a_frnd.png',
+                      ),
                       width: 36,
                       height: 36,
                     ),
-                    SizedBox(height: 2),
+                    const SizedBox(height: 2),
                     CustomText(
-                      text: 'Make a Frd',
+                      text: mode == ZoneMode.date
+                          ? 'Plan a Date'
+                          : 'Make a Frd',
                       fontSize: 9,
                       fontWeight: FontWeightType.bold,
                       color: Colors.white,
@@ -123,24 +133,29 @@ class AppBottomNavigationBar extends StatelessWidget {
     required bool isSelected,
     required VoidCallback onTap,
   }) {
-    final color = isSelected ? AppColors.friendMode: AppColors.textSecondary;
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 22),
-          const SizedBox(height: 2),
-          CustomText(
-            text: label,
-            fontSize: 10,
-            fontWeight: FontWeightType.medium,
-            color: color,
+    return Builder(
+      builder: (context) {
+        final mode = context.watch<ZoneCubit>().state;
+        final zoneTheme = ZoneTheme.fromMode(mode);
+        final color = isSelected ? zoneTheme.primary : AppColors.textSecondary;
+        return GestureDetector(
+          onTap: onTap,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color, size: 22),
+              const SizedBox(height: 2),
+              CustomText(
+                text: label,
+                fontSize: 10,
+                fontWeight: FontWeightType.medium,
+                color: color,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
-

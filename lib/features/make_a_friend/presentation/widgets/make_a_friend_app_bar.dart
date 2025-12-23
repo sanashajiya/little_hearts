@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/custom_text.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../bloc/make_a_friend_bloc.dart';
 import '../bloc/make_a_friend_event.dart';
 import '../bloc/make_a_friend_state.dart';
@@ -16,6 +18,10 @@ class MakeAFriendAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final title =
+        mode == ZoneMode.date ? 'Plan a Date' : 'Make a Friend';
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
       child: Column(
@@ -30,10 +36,10 @@ class MakeAFriendAppBar extends StatelessWidget {
                 ),
                 onPressed: onBack ?? () => Navigator.of(context).pop(),
               ),
-              const Expanded(
+              Expanded(
                 child: Center(
                   child: CustomText(
-                    text: 'Make a Friend',
+                    text: title,
                     fontSize: 18,
                     fontWeight: FontWeightType.bold,
                     color: Colors.white,

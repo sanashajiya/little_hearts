@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
 import '../../../../core/utils/app_mediaquery.dart';
 import '../../../profile/presentation/widgets/profile_completion_dialog.dart';
 
@@ -354,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {
               // Only male users can access Friend Zone Explore
               if (!_isFemale) {
-                context.go('/explore');
+                context.push('/zone', extra: ZoneMode.friend);
               }
             },
           ),
@@ -362,7 +363,9 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Date Zone',
             asset: 'assets/images/date_zone.png',
             onTap: () {
-              // TODO: Dispatch Date Zone navigation event via Bloc
+              if (!_isFemale) {
+                context.push('/zone', extra: ZoneMode.date);
+              }
             },
           ),
           _zoneCard(

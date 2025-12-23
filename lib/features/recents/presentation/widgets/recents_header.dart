@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 
 class RecentsHeader extends StatelessWidget {
   final int balance;
@@ -15,13 +18,16 @@ class RecentsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return Column(
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           decoration: BoxDecoration(
-            color: AppColors.friendMode,
+            color: theme.primary,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(color: Colors.white.withOpacity(0.3)),
           ),
@@ -77,7 +83,7 @@ class RecentsHeader extends StatelessWidget {
             height: 46,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.friendMode,
+                backgroundColor: theme.primary,
                 foregroundColor: AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

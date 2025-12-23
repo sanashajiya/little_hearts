@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
 import '../../../../core/widgets/bottom_navigation_bar.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../../domain/entities/gicon.dart';
 import '../../domain/entities/gstar.dart';
 import '../bloc/explore_bloc.dart';
@@ -31,6 +33,9 @@ class _ExploreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final zoneTheme = ZoneTheme.fromMode(mode);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -38,8 +43,8 @@ class _ExploreView extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppColors.friendModeDark.withOpacity(0.99),
-              AppColors.friendModeLight.withOpacity(0.5),
+              zoneTheme.dark.withOpacity(0.99),
+              zoneTheme.light.withOpacity(0.5),
             ],
           ),
         ),
@@ -323,13 +328,19 @@ class _ExploreView extends StatelessWidget {
               onTap: () {
                 context.read<ExploreBloc>().add(ShowAllGStars());
               },
-              child: const Text(
-                'View More',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.friendModeDark,
-                ),
+              child: Builder(
+                builder: (context) {
+                  final mode = context.watch<ZoneCubit>().state;
+                  final theme = ZoneTheme.fromMode(mode);
+                  return Text(
+                    'View More',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: theme.primary,
+                    ),
+                  );
+                },
               ),
             ),
           ],

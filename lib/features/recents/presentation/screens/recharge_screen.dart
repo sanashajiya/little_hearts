@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../bloc/recharge_cubit.dart';
 
 class RechargeScreen extends StatelessWidget {
@@ -23,13 +25,16 @@ class _RechargeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.friendModeDark, AppColors.white],
+            colors: [theme.dark, AppColors.white],
           ),
         ),
         child: SafeArea(
@@ -169,7 +174,7 @@ class _RechargeView extends StatelessWidget {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3F7DF4),
+                      backgroundColor: theme.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -370,6 +375,8 @@ class _MorePackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
     return Column(
       children: [
         // CARD + SAVE BADGE
@@ -423,7 +430,7 @@ class _MorePackCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.friendModeDark,
+                    color: theme.dark,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const CustomText(

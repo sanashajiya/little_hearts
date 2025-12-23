@@ -1,4 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../theme/zone_theme.dart';
+import '../cubit/zone_cubit.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
@@ -52,7 +55,22 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/make-a-friend',
-      builder: (context, state) => const MakeAFriendScreen(),
+      builder: (context, state) {
+        final extra = state.extra;
+        final current = context.read<ZoneCubit>().state;
+        final mode = extra is ZoneMode ? extra : current;
+        return MakeAFriendScreen(mode: mode);
+      },
+    ),
+    GoRoute(
+      path: '/zone',
+      builder: (context, state) {
+        final extra = state.extra;
+        final current = context.read<ZoneCubit>().state;
+        final mode = extra is ZoneMode ? extra : current;
+        context.read<ZoneCubit>().setMode(mode);
+        return const ExploreScreen();
+      },
     ),
     GoRoute(
       path: '/recents',

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../../domain/entities/transaction_record.dart';
 
 class TransactionList extends StatelessWidget {
@@ -14,6 +17,9 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = context.watch<ZoneCubit>().state;
+    final theme = ZoneTheme.fromMode(mode);
+
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
       itemCount: transactions.length,
@@ -23,7 +29,7 @@ class TransactionList extends StatelessWidget {
           margin: const EdgeInsets.only(left: 12,right: 12 ,bottom: 12),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: AppColors.friendMode,
+            color: theme.primary,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(

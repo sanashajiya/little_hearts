@@ -4,6 +4,7 @@ import 'core/di/injection.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_mediaquery.dart';
+import 'core/cubit/zone_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,17 +17,20 @@ class LittleHeartsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Little Hearts',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      builder: (context, child) {
-        AppMediaquery().init(context); 
-        return child!;
-      },
-      routerConfig: appRouter,
+    return BlocProvider(
+      create: (_) => ZoneCubit(),
+      child: MaterialApp.router(
+        title: 'Little Hearts',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.light,
+        builder: (context, child) {
+          AppMediaquery().init(context);
+          return child!;
+        },
+        routerConfig: appRouter,
+      ),
     );
   }
 }

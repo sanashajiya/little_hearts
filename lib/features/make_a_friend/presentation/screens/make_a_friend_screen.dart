@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/zone_theme.dart';
 import '../../../../core/widgets/bottom_navigation_bar.dart';
+import '../../../../core/cubit/zone_cubit.dart';
 import '../../data/repositories/make_a_friend_repository.dart';
 import '../bloc/make_a_friend_bloc.dart';
 import '../bloc/make_a_friend_event.dart';
@@ -11,10 +12,20 @@ import '../widgets/call_action_section.dart';
 import '../widgets/make_a_friend_app_bar.dart';
 
 class MakeAFriendScreen extends StatelessWidget {
-  const MakeAFriendScreen({super.key});
+  final ZoneMode mode;
+
+  const MakeAFriendScreen({
+    super.key,
+    this.mode = ZoneMode.friend,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // Keep global ZoneCubit in sync with the mode used to open this screen.
+    context.read<ZoneCubit>().setMode(mode);
+    final currentMode = context.watch<ZoneCubit>().state;
+    final zoneTheme = ZoneTheme.fromMode(currentMode);
+
     return BlocProvider(
       create: (context) => MakeAFriendBloc(
         repository: MakeAFriendRepositoryImpl(),
@@ -26,8 +37,8 @@ class MakeAFriendScreen extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                AppColors.friendModeDark,
-                AppColors.friendModeLight.withValues(alpha: 0.5),
+                zoneTheme.dark,
+                zoneTheme.light.withValues(alpha: 0.5),
               ],
             ),
           ),

@@ -146,7 +146,7 @@ class RecentsCalendarSheet extends StatelessWidget {
                   text: 'Ok',
                   fontSize: 14,
                   fontWeight: FontWeightType.bold,
-                  color: AppColors.friendModeDark,
+                  color: AppColors.textPrimary,
                 ),
               ),
             ],
