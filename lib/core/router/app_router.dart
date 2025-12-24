@@ -5,6 +5,8 @@ import '../cubit/zone_cubit.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/profile/presentation/screens/followers_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/explore/presentation/screens/explore_screen.dart';
 import '../../features/make_a_friend/presentation/screens/make_a_friend_screen.dart';
@@ -25,6 +27,20 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/profile',
       builder: (context, state) => const ProfilePage(),
+    ),
+    GoRoute(
+      path: '/profile_screen',
+      builder: (context, state) => const ProfileScreen(),
+    ),
+    GoRoute(
+      path: '/followers',
+      builder: (context, state) {
+        final extra = state.extra;
+        final type = extra is Map
+            ? (extra['type'] as String? ?? 'followers')
+            : 'followers';
+        return FollowersScreen(type: type);
+      },
     ),
     GoRoute(
       path: '/home',

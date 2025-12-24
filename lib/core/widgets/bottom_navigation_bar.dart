@@ -62,9 +62,7 @@ class AppBottomNavigationBar extends StatelessWidget {
                 icon: Icons.person_outline,
                 label: 'Profile',
                 isSelected: selectedItem == BottomNavItem.profile,
-                onTap: () {
-                  // TODO: Navigate to profile
-                },
+                onTap: () => context.go('/profile_screen'),
               ),
             ],
           ),

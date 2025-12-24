@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/gicon.dart';
@@ -26,10 +27,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     return statuses[_random.nextInt(statuses.length)];
   }
 
-  void _onInitialized(
-    ExploreInitialized event,
-    Emitter<ExploreState> emit,
-  ) {
+  void _onInitialized(ExploreInitialized event, Emitter<ExploreState> emit) {
     // Static data with random call types and statuses; later can be replaced with repository calls.
     final gIcons = [
       GIcon(
@@ -133,12 +131,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       ),
     ];
 
-    emit(
-      state.copyWith(
-        gIcons: gIcons,
-        gStars: gStars,
-      ),
-    );
+    emit(state.copyWith(gIcons: gIcons, gStars: gStars));
   }
 
   void _onFilterChanged(
@@ -148,26 +141,15 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     emit(state.copyWith(currentFilter: event.filter));
   }
 
-  void _onShowAllGIcons(
-    ShowAllGIcons event,
-    Emitter<ExploreState> emit,
-  ) {
+  void _onShowAllGIcons(ShowAllGIcons event, Emitter<ExploreState> emit) {
     emit(state.copyWith(viewMode: ExploreViewMode.allGIcons));
   }
 
-  void _onShowAllGStars(
-    ShowAllGStars event,
-    Emitter<ExploreState> emit,
-  ) {
+  void _onShowAllGStars(ShowAllGStars event, Emitter<ExploreState> emit) {
     emit(state.copyWith(viewMode: ExploreViewMode.allGStars));
   }
 
-  void _onShowInitialView(
-    ShowInitialView event,
-    Emitter<ExploreState> emit,
-  ) {
+  void _onShowInitialView(ShowInitialView event, Emitter<ExploreState> emit) {
     emit(state.copyWith(viewMode: ExploreViewMode.initial));
   }
 }
-
-
