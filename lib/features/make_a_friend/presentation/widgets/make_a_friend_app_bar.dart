@@ -7,6 +7,8 @@ import '../bloc/make_a_friend_bloc.dart';
 import '../bloc/make_a_friend_event.dart';
 import '../bloc/make_a_friend_state.dart';
 import '../../domain/entities/friend_avatar.dart';
+import 'package:go_router/go_router.dart';
+
 
 class MakeAFriendAppBar extends StatelessWidget {
   final VoidCallback? onBack;
@@ -34,7 +36,11 @@ class MakeAFriendAppBar extends StatelessWidget {
                   color: Colors.white,
                   size: 20,
                 ),
-                onPressed: onBack ?? () => Navigator.of(context).pop(),
+                onPressed: onBack ??
+                    () {
+                      // 🔑 Clear stack and go to Explore
+                      context.go('/explore', extra: mode);
+                    },
               ),
               Expanded(
                 child: Center(

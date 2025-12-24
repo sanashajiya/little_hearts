@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../widgets/profile_menu.dart';
 
@@ -21,14 +19,8 @@ class ProfileHeader extends StatelessWidget {
               color: AppColors.white,
               size: 20,
             ),
-            onPressed: () => context.pop(),
+            onPressed: () => context.go('/explore'),
           ),
-          // const CustomText(
-          //   text: 'Self profile screen',
-          //   fontSize: 18,
-          //   fontWeight: FontWeightType.bold,
-          //   color: AppColors.white,
-          // ),
           ProfileMenu(),
         ],
       ),
