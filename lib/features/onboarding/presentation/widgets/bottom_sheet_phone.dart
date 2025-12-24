@@ -142,7 +142,7 @@ class BottomSheetPhone extends StatelessWidget {
                   width: 12,
                   height: 12,
                   child: Transform.scale(
-                    scale: 0.8,
+                    scale: 1,
                     child: Checkbox(
                       value: termsAccepted,
                       onChanged: onTermsChanged,
@@ -164,11 +164,29 @@ class BottomSheetPhone extends StatelessWidget {
                       children: [
                         TextSpan(
                           text:
-                              'Before proceeding, please accept the Terms & Conditions\n of Little Hearts',
+                              'Before proceeding, please accept the ',
+                          style: GoogleFonts.nunito(
+                            fontSize: getProportionateScreenHeight(10),
+                            color: AppColors.textLink,
+                            
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              'Terms & Conditions\n ',
                           style: GoogleFonts.nunito(
                             fontSize: getProportionateScreenHeight(10),
                             color: AppColors.textLink,
                             decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              'of Little Hearts',
+                          style: GoogleFonts.nunito(
+                            fontSize: getProportionateScreenHeight(10),
+                            color: AppColors.textLink,
+                            
                           ),
                         ),
                       ],
