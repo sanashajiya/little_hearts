@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/gicon.dart';
 import '../../../../core/constants/custom_text.dart';
@@ -18,9 +19,11 @@ class GIconCard extends StatelessWidget {
     final mode = context.watch<ZoneCubit>().state;
     final theme = ZoneTheme.fromMode(mode);
 
-    return Stack(
-      children: [
-        Container(
+    return GestureDetector(
+      onTap: () => context.push('/view-profile', extra: gIcon.name),
+      child: Stack(
+        children: [
+          Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
@@ -122,7 +125,8 @@ class GIconCard extends StatelessWidget {
             ),
           ),
         ),
-      ],
+        ],
+      ),
     );
   }
 

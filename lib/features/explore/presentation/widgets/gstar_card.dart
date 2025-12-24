@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/gstar.dart';
 import '../../domain/entities/gicon.dart';
@@ -19,9 +20,11 @@ class GStarCard extends StatelessWidget {
     final mode = context.watch<ZoneCubit>().state;
     final theme = ZoneTheme.fromMode(mode);
 
-    return Stack(
-      children: [
-        Container(
+    return GestureDetector(
+      onTap: () => context.push('/view-profile', extra: gStar.name),
+      child: Stack(
+        children: [
+          Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
@@ -120,7 +123,8 @@ class GStarCard extends StatelessWidget {
             ),
           ),
         ),
-      ],
+        ],
+      ),
     );
   }
 

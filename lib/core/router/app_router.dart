@@ -10,6 +10,7 @@ import '../../features/profile/presentation/screens/followers_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/blocked_users_screen.dart';
 import '../../features/profile/presentation/screens/terms_conditions_screen.dart';
+import '../../features/profile/presentation/screens/view_profile_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/explore/presentation/screens/explore_screen.dart';
 import '../../features/make_a_friend/presentation/screens/make_a_friend_screen.dart';
@@ -56,6 +57,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/terms-conditions',
       builder: (context, state) => const TermsConditionsScreen(),
+    ),
+    GoRoute(
+      path: '/view-profile',
+      builder: (context, state) {
+        final extra = state.extra;
+        final userId = extra is String ? extra : null;
+        return ViewProfileScreen(userId: userId);
+      },
     ),
     GoRoute(
       path: '/home',
