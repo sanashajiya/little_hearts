@@ -55,7 +55,7 @@ class PreviousStoriesCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: AppColors.primary,
+                      color: theme.primary,
                       width: 1.5,
                     ),
                   ),

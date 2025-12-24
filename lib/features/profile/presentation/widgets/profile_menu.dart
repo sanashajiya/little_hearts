@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import 'profile_menu_item.dart';
@@ -62,7 +63,19 @@ class ProfileMenu extends StatelessWidget {
         ),
       ],
       onSelected: (value) {
-        // TODO: Handle menu actions
+        switch (value) {
+          case 'edit':
+            context.push('/edit-profile');
+            break;
+          case 'blocked':
+            context.push('/blocked-users');
+            break;
+          case 'terms':
+            context.push('/terms-conditions');
+            break;
+          default:
+            break;
+        }
       },
     );
   }
