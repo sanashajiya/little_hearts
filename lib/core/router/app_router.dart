@@ -18,6 +18,8 @@ import '../../features/male/make_a_friend/presentation/screens/make_a_friend_scr
 import '../../features/male/recents/presentation/screens/recents_screen.dart';
 import '../../features/male/recents/presentation/screens/recharge_screen.dart';
 import '../../features/female/explore/presentation/screens/female_explore_screen.dart';
+import '../../features/female/go_online/presentation/screens/go_online_screen.dart';
+import '../../features/female/credits/presentation/screens/credits_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -137,6 +139,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/female/explore',
       builder: (context, state) => const FemaleExploreScreen(),
+    ),
+    GoRoute(
+      path: '/female/go-online',
+      builder: (context, state) => const GoOnlineScreen(),
+    ),
+    GoRoute(
+      path: '/female/credits',
+      builder: (context, state) => const CreditsScreen(),
     ),
   ],
 );

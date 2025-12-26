@@ -60,10 +60,7 @@ class FemaleBottomNavigationBar extends StatelessWidget {
                 icon: Icons.account_balance_wallet_outlined,
                 label: 'Credits',
                 isSelected: selectedItem == FemaleBottomNavItem.credits,
-                onTap: () {
-                  // TODO: Navigate to credits screen when implemented
-                  // context.go('/credits');
-                },
+                onTap: () => context.go('/female/credits'),
                 zoneTheme: zoneTheme,
               ),
               const SizedBox(width: 35),
@@ -82,13 +79,12 @@ class FemaleBottomNavigationBar extends StatelessWidget {
           ),
           Positioned(
             bottom: 8,
-            child: GestureDetector(
+              child: GestureDetector(
               onTap: () {
                 if (selectedItem == FemaleBottomNavItem.goOnline) {
                   return; // already on this screen, do nothing
                 }
-                // TODO: Navigate to Go Online screen when implemented
-                // context.push('/go-online', extra: mode);
+                context.go('/female/go-online');
               },
               child: Container(
                 width: 85,
