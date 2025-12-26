@@ -7,7 +7,7 @@ import '../../../../../core/cubit/zone_cubit.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/zone_theme.dart';
 import '../../../explore/presentation/widgets/female_bottom_navigation_bar.dart';
-import '../../../go_online/presentation/widgets/female_app_bar.dart';
+// import '../../../go_online/presentation/widgets/female_app_bar.dart';
 import '../bloc/credits_bloc.dart';
 import '../bloc/credits_event.dart';
 import '../bloc/credits_state.dart';
@@ -116,9 +116,36 @@ class CreditsScreen extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.fromLTRB(8, 8, 16, 0),
-                    child: FemaleAppBar(title: 'Credits'),
+                  Material(
+                    elevation: 2,
+                    shadowColor: Colors.black.withOpacity(0.2),
+                    type: MaterialType.transparency,
+                    child: SizedBox(
+                      height: kToolbarHeight,
+                      child: Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            onPressed: () => context.pop(),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: CustomText(
+                                text: 'Credits',
+                                fontSize: 18,
+                                fontWeight: FontWeightType.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 48), // balance center title
+                        ],
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: Container(

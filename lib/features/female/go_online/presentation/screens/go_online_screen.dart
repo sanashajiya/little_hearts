@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:little_hearts/core/constants/custom_text.dart';
 import '../../../../../core/cubit/zone_cubit.dart';
 import '../../../../../core/theme/zone_theme.dart';
 import '../bloc/go_online_bloc.dart';
@@ -36,9 +37,37 @@ class GoOnlineScreen extends StatelessWidget {
           child: SafeArea(
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 16, 0),
-                  child: FemaleAppBar(title: 'Go Online'),
+                
+                 Material(
+                  elevation: 2,
+                  shadowColor: Colors.black.withOpacity(0.2),
+                  type: MaterialType.transparency,
+                  child: SizedBox(
+                    height: kToolbarHeight,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new,
+                            size: 20,
+                            color: Colors.white,
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: CustomText(
+                              text: 'Go Online',
+                              fontSize: 18,
+                              fontWeight: FontWeightType.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 48), // balance center title
+                      ],
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: Container(
