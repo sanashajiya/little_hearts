@@ -17,9 +17,7 @@ import '../../features/male/make_a_friend/presentation/screens/make_a_friend_scr
 import '../../features/male/recents/presentation/screens/recents_screen.dart';
 import '../../features/male/recents/presentation/screens/recharge_screen.dart';
 import '../../features/female/explore/presentation/screens/female_explore_screen.dart';
-import '../../features/female/explore/presentation/screens/buddies_see_more_screen.dart';
-import '../../features/female/explore/presentation/screens/most_engaged_view_more_screen.dart';
-import '../../features/female/explore/presentation/bloc/female_explore_bloc.dart';
+
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -123,22 +121,6 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/female/explore',
       builder: (context, state) => const FemaleExploreScreen(),
-    ),
-    GoRoute(
-      path: '/female/buddies-see-more',
-      builder: (context, state) {
-        final extra = state.extra;
-        final bloc = extra is FemaleExploreBloc ? extra : null;
-        return BuddiesSeeMoreScreen(bloc: bloc);
-      },
-    ),
-    GoRoute(
-      path: '/female/most-engaged-view-more',
-      builder: (context, state) {
-        final extra = state.extra;
-        final bloc = extra is FemaleExploreBloc ? extra : null;
-        return MostEngagedViewMoreScreen(bloc: bloc);
-      },
     ),
   ],
 );
