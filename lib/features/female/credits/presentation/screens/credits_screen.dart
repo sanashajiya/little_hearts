@@ -12,6 +12,7 @@ import '../bloc/credits_event.dart';
 import '../bloc/credits_state.dart';
 import '../widgets/call_history_card.dart';
 import '../widgets/credits_summary_card.dart';
+import '../widgets/credits_calendar_sheet.dart';
 import '../widgets/withdrawal_history_card.dart';
 
 class CreditsScreen extends StatelessWidget {
@@ -37,43 +38,119 @@ class CreditsScreen extends StatelessWidget {
             ),
           ),
           child: SafeArea(
-            child: Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(8, 8, 16, 0),
-                  child: FemaleAppBar(title: 'Credits'),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(32),
-                        topRight: Radius.circular(32),
+            child: BlocListener<CreditsBloc, CreditsState>(
+              listenWhen: (prev, current) =>
+                  prev.isCalendarVisible != current.isCalendarVisible,
+              listener: (context, state) async {
+                if (state.isCalendarVisible) {
+                  await showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (ctx) {
+                      // Use BlocBuilder so the sheet rebuilds when month changes
+                      return BlocProvider.value(
+                        value: context.read<CreditsBloc>(),
+                        child: BlocBuilder<CreditsBloc, CreditsState>(
+                          builder: (ctx, sheetState) {
+                            // Get highlighted dates from call history and withdrawal history
+                            final highlightedDates = <DateTime>{};
+                            
+                            // Add call history dates
+                            for (final item in sheetState.callHistory) {
+                              highlightedDates.add(DateTime(
+                                item.dateTime.year,
+                                item.dateTime.month,
+                                item.dateTime.day,
+                              ));
+                            }
+                            
+                            // Add withdrawal history dates
+                            for (final item in sheetState.withdrawalHistory) {
+                              highlightedDates.add(DateTime(
+                                item.dateTime.year,
+                                item.dateTime.month,
+                                item.dateTime.day,
+                              ));
+                            }
+
+                            return CreditsCalendarSheet(
+                              month: sheetState.currentMonth,
+                              selectedDate: sheetState.selectedDate,
+                              highlightedDates: highlightedDates,
+                              onDateSelected: (date) {
+                                ctx.read<CreditsBloc>().add(
+                                  CreditsDateSelected(date),
+                                );
+                                // Filter by selected date
+                                ctx.read<CreditsBloc>().add(
+                                  DateFilterChanged(
+                                    startDate: date,
+                                    endDate: date,
+                                  ),
+                                );
+                              },
+                              onPreviousMonth: () {
+                                ctx.read<CreditsBloc>().add(
+                                  const CreditsMonthChanged(isNext: false),
+                                );
+                              },
+                              onNextMonth: () {
+                                ctx.read<CreditsBloc>().add(
+                                  const CreditsMonthChanged(isNext: true),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+                  if (context.mounted) {
+                    context.read<CreditsBloc>().add(
+                      const CreditsCalendarClosed(),
+                    );
+                  }
+                }
+              },
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(8, 8, 16, 0),
+                    child: FemaleAppBar(title: 'Credits'),
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(32),
+                          topRight: Radius.circular(32),
+                        ),
+                      ),
+                      child: BlocBuilder<CreditsBloc, CreditsState>(
+                        builder: (context, state) {
+                          return Column(
+                            children: [
+                              CreditsSummaryCard(
+                                totalStars: state.totalStars,
+                                convertedAmount: state.convertedAmount,
+                              ),
+                              _buildWithdrawButton(context, zoneTheme),
+                              _buildTabsSection(context, state, zoneTheme),
+                              const SizedBox(height: 8),
+                              Expanded(child: _buildHistoryList(context, state)),
+                              const SizedBox(height: 50), // Space for bottom nav
+                            ],
+                          );
+                        },
                       ),
                     ),
-                    child: BlocBuilder<CreditsBloc, CreditsState>(
-                      builder: (context, state) {
-                        return Column(
-                          children: [
-                            CreditsSummaryCard(
-                              totalStars: state.totalStars,
-                              convertedAmount: state.convertedAmount,
-                            ),
-                            _buildWithdrawButton(context, zoneTheme),
-                            _buildTabsSection(context, state, zoneTheme),
-                            const SizedBox(height: 8),
-                            Expanded(child: _buildHistoryList(context, state)),
-                            const SizedBox(height: 50), // Space for bottom nav
-                          ],
-                        );
-                      },
-                    ),
                   ),
-                ),
-                const FemaleBottomNavigationBar(
-                  selectedItem: FemaleBottomNavItem.credits,
-                ),
-              ],
+                  const FemaleBottomNavigationBar(
+                    selectedItem: FemaleBottomNavItem.credits,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -143,9 +220,11 @@ class CreditsScreen extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           GestureDetector(
-            onTap: () => _showDatePicker(context),
+            onTap: () {
+              context.read<CreditsBloc>().add(const CreditsCalendarOpened());
+            },
             child: Image.asset(
               'assets/icons/calendar.png',
               width: 26,
@@ -229,25 +308,4 @@ class CreditsScreen extends StatelessWidget {
     }
   }
 
-  Future<void> _showDatePicker(BuildContext context) async {
-    final bloc = context.read<CreditsBloc>();
-    final state = bloc.state;
-
-    final DateTimeRange? picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-      initialDateRange:
-          state.filterStartDate != null && state.filterEndDate != null
-          ? DateTimeRange(
-              start: state.filterStartDate!,
-              end: state.filterEndDate!,
-            )
-          : null,
-    );
-
-    if (picked != null) {
-      bloc.add(DateFilterChanged(startDate: picked.start, endDate: picked.end));
-    }
-  }
 }

@@ -5,10 +5,14 @@ import 'credits_event.dart';
 import 'credits_state.dart';
 
 class CreditsBloc extends Bloc<CreditsEvent, CreditsState> {
-  CreditsBloc() : super(const CreditsState()) {
+  CreditsBloc() : super(CreditsState()) {
     on<CreditsInitialized>(_onInitialized);
     on<TabChanged>(_onTabChanged);
     on<DateFilterChanged>(_onDateFilterChanged);
+    on<CreditsCalendarOpened>(_onCalendarOpened);
+    on<CreditsCalendarClosed>(_onCalendarClosed);
+    on<CreditsDateSelected>(_onDateSelected);
+    on<CreditsMonthChanged>(_onMonthChanged);
   }
 
   void _onInitialized(
@@ -91,6 +95,38 @@ class CreditsBloc extends Bloc<CreditsEvent, CreditsState> {
       filterStartDate: event.startDate,
       filterEndDate: event.endDate,
     ));
+  }
+
+  void _onCalendarOpened(
+    CreditsCalendarOpened event,
+    Emitter<CreditsState> emit,
+  ) {
+    emit(state.copyWith(isCalendarVisible: true));
+  }
+
+  void _onCalendarClosed(
+    CreditsCalendarClosed event,
+    Emitter<CreditsState> emit,
+  ) {
+    emit(state.copyWith(isCalendarVisible: false));
+  }
+
+  void _onDateSelected(
+    CreditsDateSelected event,
+    Emitter<CreditsState> emit,
+  ) {
+    emit(state.copyWith(selectedDate: event.selectedDate));
+  }
+
+  void _onMonthChanged(
+    CreditsMonthChanged event,
+    Emitter<CreditsState> emit,
+  ) {
+    final current = state.currentMonth;
+    final newMonth = event.isNext
+        ? DateTime(current.year, current.month + 1, 1)
+        : DateTime(current.year, current.month - 1, 1);
+    emit(state.copyWith(currentMonth: newMonth));
   }
 }
 

@@ -10,15 +10,21 @@ class CreditsState extends Equatable {
   final List<WithdrawalHistoryItem> withdrawalHistory;
   final DateTime? filterStartDate;
   final DateTime? filterEndDate;
+  final bool isCalendarVisible;
+  final DateTime currentMonth;
+  final DateTime? selectedDate;
 
-  const CreditsState({
-    this.totalStars = 20,
+  CreditsState({
+    this.totalStars = 0,
     this.selectedTab = CreditsTab.callHistory,
     this.callHistory = const [],
     this.withdrawalHistory = const [],
     this.filterStartDate,
     this.filterEndDate,
-  });
+    this.isCalendarVisible = false,
+    DateTime? currentMonth,
+    this.selectedDate,
+  }) : currentMonth = currentMonth ?? DateTime.now();
 
   int get convertedAmount => totalStars; // 1 Star = 1 Rupee
 
@@ -59,6 +65,9 @@ class CreditsState extends Equatable {
     List<WithdrawalHistoryItem>? withdrawalHistory,
     DateTime? filterStartDate,
     DateTime? filterEndDate,
+    bool? isCalendarVisible,
+    DateTime? currentMonth,
+    DateTime? selectedDate,
   }) {
     return CreditsState(
       totalStars: totalStars ?? this.totalStars,
@@ -67,6 +76,9 @@ class CreditsState extends Equatable {
       withdrawalHistory: withdrawalHistory ?? this.withdrawalHistory,
       filterStartDate: filterStartDate ?? this.filterStartDate,
       filterEndDate: filterEndDate ?? this.filterEndDate,
+      isCalendarVisible: isCalendarVisible ?? this.isCalendarVisible,
+      currentMonth: currentMonth ?? this.currentMonth,
+      selectedDate: selectedDate ?? this.selectedDate,
     );
   }
 
@@ -78,6 +90,9 @@ class CreditsState extends Equatable {
         withdrawalHistory,
         filterStartDate,
         filterEndDate,
+        isCalendarVisible,
+        currentMonth,
+        selectedDate,
       ];
 }
 

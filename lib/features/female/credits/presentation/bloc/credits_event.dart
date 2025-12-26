@@ -33,5 +33,31 @@ class DateFilterChanged extends CreditsEvent {
   List<Object?> get props => [startDate, endDate];
 }
 
+class CreditsCalendarOpened extends CreditsEvent {
+  const CreditsCalendarOpened();
+}
+
+class CreditsCalendarClosed extends CreditsEvent {
+  const CreditsCalendarClosed();
+}
+
+class CreditsDateSelected extends CreditsEvent {
+  final DateTime selectedDate;
+
+  const CreditsDateSelected(this.selectedDate);
+
+  @override
+  List<Object?> get props => [selectedDate];
+}
+
+class CreditsMonthChanged extends CreditsEvent {
+  final bool isNext;
+
+  const CreditsMonthChanged({required this.isNext});
+
+  @override
+  List<Object?> get props => [isNext];
+}
+
 enum CreditsTab { callHistory, withdrawalHistory }
 
