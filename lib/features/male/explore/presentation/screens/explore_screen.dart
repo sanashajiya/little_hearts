@@ -60,7 +60,7 @@ class _ExploreView extends StatelessWidget {
                         if (state.viewMode != ExploreViewMode.initial) {
                           context.read<ExploreBloc>().add(ShowInitialView());
                         } else {
-                          context.go('/home');
+                          context.go('/home', extra: mode);
                         }
                       },
                     ),

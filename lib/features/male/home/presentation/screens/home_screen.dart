@@ -7,6 +7,7 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/zone_theme.dart';
 import '../../../../../core/utils/app_mediaquery.dart';
 import '../../../../../core/cubit/zone_cubit.dart';
+import '../../../../../core/cubit/user_cubit.dart';
 import '../../../profile/presentation/widgets/profile_completion_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -58,12 +59,23 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  bool get _isFemale => (widget.gender ?? '').toLowerCase() == 'female';
+  bool _isFemale(BuildContext context) {
+    // First try to get gender from UserCubit (persisted state)
+    final userState = context.watch<UserCubit>().state;
+    if (userState.gender != null) {
+      return userState.isFemale;
+    }
+    // Fallback to route parameter (for first-time navigation)
+    return (widget.gender ?? '').toLowerCase() == 'female';
+  }
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final height = mediaQuery.size.height;
+    
+    // Watch UserCubit to rebuild when gender changes
+    final isFemale = _isFemale(context);
 
     return Scaffold(
       backgroundColor: AppColors.greyLight,
@@ -84,13 +96,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildTopBar(),
+                    _buildTopBar(context, isFemale),
                     const SizedBox(height: 16),
                     _buildGreetingSection(),
                     const SizedBox(height: 16),
                     _buildStoriesSection(),
                     // const SizedBox(height: 8),
-                    _buildZonesSection(),
+                    _buildZonesSection(context, isFemale),
                     const SizedBox(height: 16),
                     _buildBannerCarousel(height),
                     const SizedBox(height: 16),
@@ -153,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTopBar() {
+  Widget _buildTopBar(BuildContext context, bool isFemale) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -174,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             children: [
               Image.asset(
-                _isFemale ? 'assets/icons/star.png' : 'assets/icons/coin.png',
+                isFemale ? 'assets/icons/star.png' : 'assets/icons/coin.png',
                 width: 18,
                 height: 18,
               ),
@@ -331,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildZonesSection() {
+  Widget _buildZonesSection(BuildContext context, bool isFemale) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
@@ -354,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Friend Zone',
             asset: 'assets/images/friend_zone.png',
             onTap: () {
-              if (_isFemale) {
+              if (isFemale) {
                 // Female users navigate to female explore screen
                 context.read<ZoneCubit>().setMode(ZoneMode.friend);
                 context.push('/female/explore');
@@ -368,7 +380,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Date Zone',
             asset: 'assets/images/date_zone.png',
             onTap: () {
-              if (_isFemale) {
+              if (isFemale) {
                 // Female users navigate to female explore screen
                 context.read<ZoneCubit>().setMode(ZoneMode.date);
                 context.push('/female/explore');

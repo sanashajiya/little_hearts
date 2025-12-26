@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../core/constants/custom_text.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/cubit/user_cubit.dart';
 import '../bloc/profile_setup_bloc.dart';
 import '../bloc/profile_setup_event.dart';
 import '../bloc/profile_setup_state.dart';
@@ -70,10 +71,21 @@ class _ProfilePageState extends State<ProfilePage> {
     final bloc = blocContext.read<ProfileSetupBloc>();
     bloc.add(const ProfileSetupCompleted());
 
-    // Navigate directly to Home and clear the navigation stack
-    // Pass showCompletionDialog flag to show the dialog on home screen
+    // Save user profile to UserCubit for global persistence
     if (mounted) {
       final state = bloc.state;
+      final userCubit = blocContext.read<UserCubit>();
+      
+      // Save gender and username to persistent storage
+      if (state.gender != null && state.username.isNotEmpty) {
+        userCubit.setUserProfile(
+          username: state.username,
+          gender: state.gender!,
+        );
+      }
+
+      // Navigate directly to Home and clear the navigation stack
+      // Pass showCompletionDialog flag to show the dialog on home screen
       blocContext.go(
         '/home',
         extra: {

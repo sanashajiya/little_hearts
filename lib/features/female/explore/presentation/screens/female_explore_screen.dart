@@ -63,7 +63,7 @@ class _FemaleExploreView extends StatelessWidget {
                             ShowInitialView(),
                           );
                         } else {
-                          context.go('/home');
+                          context.go('/home', extra: mode);
                         }
                       },
                     ),

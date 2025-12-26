@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../theme/zone_theme.dart';
 import '../cubit/zone_cubit.dart';
+import '../cubit/user_cubit.dart' show UserCubit, Gender;
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/male/profile/presentation/pages/profile_page.dart';
@@ -69,6 +70,8 @@ final appRouter = GoRouter(
         var userName = 'User';
         String? gender;
         bool showCompletionDialog = false;
+        
+        // Try to get gender from route parameters first (for first-time navigation)
         if (extra is Map) {
           final untypedMap = extra.cast<dynamic, dynamic>();
           final fromExtra = (untypedMap['username'] as String?)?.trim();
@@ -79,6 +82,19 @@ final appRouter = GoRouter(
           showCompletionDialog =
               untypedMap['showCompletionDialog'] as bool? ?? false;
         }
+        
+        // Fallback to UserCubit if gender not in route params
+        // This ensures gender persists across navigation
+        final userCubit = context.read<UserCubit>();
+        if (gender == null && userCubit.state.gender != null) {
+          gender = userCubit.state.gender == Gender.female ? 'female' : 'male';
+        }
+        
+        // Use username from UserCubit if available and route param is default
+        if (userName == 'User' && userCubit.state.username != null) {
+          userName = userCubit.state.username!;
+        }
+        
         return HomeScreen(
           userName: userName,
           gender: gender,
