@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../core/constants/custom_text.dart';
 import '../../../../../core/cubit/zone_cubit.dart';
@@ -165,7 +166,7 @@ class CreditsScreen extends StatelessWidget {
       height: 50,
       child: ElevatedButton(
         onPressed: () {
-          // TODO: Implement withdraw functionality
+          context.push('/female/pan-verification');
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: zoneTheme.primary,

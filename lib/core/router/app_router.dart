@@ -20,6 +20,8 @@ import '../../features/male/recents/presentation/screens/recharge_screen.dart';
 import '../../features/female/explore/presentation/screens/female_explore_screen.dart';
 import '../../features/female/go_online/presentation/screens/go_online_screen.dart';
 import '../../features/female/credits/presentation/screens/credits_screen.dart';
+import '../../features/female/credits/presentation/screens/pan_verification_screen.dart';
+import '../../features/female/credits/presentation/screens/bank_details_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -147,6 +149,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/female/credits',
       builder: (context, state) => const CreditsScreen(),
+    ),
+    GoRoute(
+      path: '/female/pan-verification',
+      builder: (context, state) => const PanVerificationScreen(),
+    ),
+    GoRoute(
+      path: '/female/bank-details',
+      builder: (context, state) => const BankDetailsScreen(),
     ),
   ],
 );

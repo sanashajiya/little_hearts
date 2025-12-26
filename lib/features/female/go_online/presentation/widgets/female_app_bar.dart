@@ -18,17 +18,17 @@ class FemaleAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
+        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 20),
         onPressed: onBack ?? () => context.pop(),
       ),
       title: CustomText(
         text: title,
         fontSize: 18,
         fontWeight: FontWeightType.bold,
-        color: Colors.white,
+        color: Colors.black,
       ),
       centerTitle: true,
     );
