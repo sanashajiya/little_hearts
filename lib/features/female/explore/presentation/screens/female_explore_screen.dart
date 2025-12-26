@@ -58,7 +58,13 @@ class _FemaleExploreView extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(8, 8, 16, 0),
                     child: FemaleExploreAppBar(
                       onBack: () {
-                        context.go('/home');
+                        if (state.viewMode != FemaleExploreViewMode.initial) {
+                          context.read<FemaleExploreBloc>().add(
+                            ShowInitialView(),
+                          );
+                        } else {
+                          context.go('/home');
+                        }
                       },
                     ),
                   );
@@ -78,15 +84,14 @@ class _FemaleExploreView extends StatelessWidget {
                   ),
                   child: BlocBuilder<FemaleExploreBloc, FemaleExploreState>(
                     builder: (context, state) {
-                      // switch (state.viewMode) {
-                      //   case ExploreViewMode.allGIcons:
-                      //     return _buildBuddiesSection(context, state);
-                      //   case ExploreViewMode.allGStars:
-                      //     return _buildMostEngagedSection(context, state);
-                      //   case ExploreViewMode.initial:
-                      //     return _buildInitialView(context, state);
-                      // }
-                      return _buildInitialView(context, state);
+                      switch (state.viewMode) {
+                        case FemaleExploreViewMode.allBuddies:
+                          return _buildAllBuddiesView(context, state);
+                        case FemaleExploreViewMode.allMostEngaged:
+                          return _buildAllMostEngagedView(context, state);
+                        case FemaleExploreViewMode.initial:
+                          return _buildInitialView(context, state);
+                      }
                     },
                   ),
                 ),
@@ -172,8 +177,7 @@ class _FemaleExploreView extends StatelessWidget {
               return SeeMoreCard(
                 title: 'See More\nProfile',
                 onTap: () {
-                  final bloc = context.read<FemaleExploreBloc>();
-                  context.push('/female/buddies-see-more', extra: bloc);
+                  context.read<FemaleExploreBloc>().add(ShowAllBuddies());
                 },
               );
             }
@@ -205,8 +209,7 @@ class _FemaleExploreView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                final bloc = context.read<FemaleExploreBloc>();
-                context.push('/female/most-engaged-view-more', extra: bloc);
+                context.read<FemaleExploreBloc>().add(ShowAllMostEngaged());
               },
               child: Builder(
                 builder: (context) {
@@ -240,6 +243,167 @@ class _FemaleExploreView extends StatelessWidget {
             final engaged = mostEngaged[index];
             return EngagedCard(mostEngaged: engaged, onJoin: () {});
           },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAllBuddiesView(BuildContext context, FemaleExploreState state) {
+    return Column(
+      children: [
+        // Header with back button
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+                onPressed: () {
+                  context.read<FemaleExploreBloc>().add(ShowInitialView());
+                },
+              ),
+              const Text(
+                'Buddies',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const Spacer(),
+              PopupMenuButton<FemaleExploreFilter>(
+                icon: const Icon(
+                  Icons.filter_list,
+                  color: AppColors.textPrimary,
+                ),
+                position: PopupMenuPosition.under,
+                onSelected: (filter) {
+                  context.read<FemaleExploreBloc>().add(
+                    FemaleExploreFilterChanged(filter),
+                  );
+                },
+                itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.mostRelevant,
+                    child: Text('Most Relevant'),
+                  ),
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.online,
+                    child: Text('Online'),
+                  ),
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.offline,
+                    child: Text('Offline'),
+                  ),
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.nearby,
+                    child: Text('Near by'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        // All Buddies Grid
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemCount: state.buddies.length,
+              itemBuilder: (context, index) {
+                final buddy = state.buddies[index];
+                return BuddyCard(buddy: buddy, onJoin: () {});
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAllMostEngagedView(
+    BuildContext context,
+    FemaleExploreState state,
+  ) {
+    return Column(
+      children: [
+        // Header with back button
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new, size: 18),
+                onPressed: () {
+                  context.read<FemaleExploreBloc>().add(ShowInitialView());
+                },
+              ),
+              const Text(
+                'Most Engaged',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const Spacer(),
+              PopupMenuButton<FemaleExploreFilter>(
+                icon: const Icon(
+                  Icons.filter_list,
+                  color: AppColors.textPrimary,
+                ),
+                position: PopupMenuPosition.under,
+                onSelected: (filter) {
+                  context.read<FemaleExploreBloc>().add(
+                    FemaleExploreFilterChanged(filter),
+                  );
+                },
+                itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.mostRelevant,
+                    child: Text('Most Relevant'),
+                  ),
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.online,
+                    child: Text('Online'),
+                  ),
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.offline,
+                    child: Text('Offline'),
+                  ),
+                  PopupMenuItem(
+                    value: FemaleExploreFilter.nearby,
+                    child: Text('Near by'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        // All Most Engaged Grid
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.65,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemCount: state.mostEngaged.length,
+              itemBuilder: (context, index) {
+                final engaged = state.mostEngaged[index];
+                return EngagedCard(mostEngaged: engaged, onJoin: () {});
+              },
+            ),
+          ),
         ),
       ],
     );

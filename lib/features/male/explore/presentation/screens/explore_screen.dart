@@ -212,6 +212,35 @@ class _ExploreView extends StatelessWidget {
                   color: AppColors.textPrimary,
                 ),
               ),
+              const Spacer(),
+              PopupMenuButton<ExploreFilter>(
+                icon: const Icon(
+                  Icons.filter_list,
+                  color: AppColors.textPrimary,
+                ),
+                position: PopupMenuPosition.under,
+                onSelected: (filter) {
+                  context.read<ExploreBloc>().add(ExploreFilterChanged(filter));
+                },
+                itemBuilder: (context) => const [
+                  PopupMenuItem(
+                    value: ExploreFilter.mostRelevant,
+                    child: Text('Most Relevant'),
+                  ),
+                  PopupMenuItem(
+                    value: ExploreFilter.online,
+                    child: Text('Online'),
+                  ),
+                  PopupMenuItem(
+                    value: ExploreFilter.offline,
+                    child: Text('Offline'),
+                  ),
+                  PopupMenuItem(
+                    value: ExploreFilter.nearby,
+                    child: Text('Near by'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
