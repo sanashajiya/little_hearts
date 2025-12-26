@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/constants/custom_text.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/zone_theme.dart';
 import '../../../../../core/utils/app_mediaquery.dart';
+import '../../../../../core/cubit/zone_cubit.dart';
 import '../../../profile/presentation/widgets/profile_completion_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -353,8 +354,12 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Friend Zone',
             asset: 'assets/images/friend_zone.png',
             onTap: () {
-              // Only male users can access Friend Zone Explore
-              if (!_isFemale) {
+              if (_isFemale) {
+                // Female users navigate to female explore screen
+                context.read<ZoneCubit>().setMode(ZoneMode.friend);
+                context.push('/female/explore');
+              } else {
+                // Male users navigate to male explore screen
                 context.push('/zone', extra: ZoneMode.friend);
               }
             },
@@ -363,7 +368,12 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'Date Zone',
             asset: 'assets/images/date_zone.png',
             onTap: () {
-              if (!_isFemale) {
+              if (_isFemale) {
+                // Female users navigate to female explore screen
+                context.read<ZoneCubit>().setMode(ZoneMode.date);
+                context.push('/female/explore');
+              } else {
+                // Male users navigate to male explore screen
                 context.push('/zone', extra: ZoneMode.date);
               }
             },

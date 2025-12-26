@@ -16,22 +16,20 @@ import '../../features/male/explore/presentation/screens/explore_screen.dart';
 import '../../features/male/make_a_friend/presentation/screens/make_a_friend_screen.dart';
 import '../../features/male/recents/presentation/screens/recents_screen.dart';
 import '../../features/male/recents/presentation/screens/recharge_screen.dart';
+import '../../features/female/explore/presentation/screens/female_explore_screen.dart';
+import '../../features/female/explore/presentation/screens/buddies_see_more_screen.dart';
+import '../../features/female/explore/presentation/screens/most_engaged_view_more_screen.dart';
+import '../../features/female/explore/presentation/bloc/female_explore_bloc.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashPage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const SplashPage()),
     GoRoute(
       path: '/onboarding',
       builder: (context, state) => const OnboardingPage(),
     ),
-    GoRoute(
-      path: '/profile',
-      builder: (context, state) => const ProfilePage(),
-    ),
+    GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
     GoRoute(
       path: '/profile_screen',
       builder: (context, state) => const ProfileScreen(),
@@ -80,7 +78,8 @@ final appRouter = GoRouter(
             userName = fromExtra;
           }
           gender = untypedMap['gender'] as String?;
-          showCompletionDialog = untypedMap['showCompletionDialog'] as bool? ?? false;
+          showCompletionDialog =
+              untypedMap['showCompletionDialog'] as bool? ?? false;
         }
         return HomeScreen(
           userName: userName,
@@ -119,6 +118,27 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/recharge',
       builder: (context, state) => const RechargeScreen(),
+    ),
+    // Female Explore Routes
+    GoRoute(
+      path: '/female/explore',
+      builder: (context, state) => const FemaleExploreScreen(),
+    ),
+    GoRoute(
+      path: '/female/buddies-see-more',
+      builder: (context, state) {
+        final extra = state.extra;
+        final bloc = extra is FemaleExploreBloc ? extra : null;
+        return BuddiesSeeMoreScreen(bloc: bloc);
+      },
+    ),
+    GoRoute(
+      path: '/female/most-engaged-view-more',
+      builder: (context, state) {
+        final extra = state.extra;
+        final bloc = extra is FemaleExploreBloc ? extra : null;
+        return MostEngagedViewMoreScreen(bloc: bloc);
+      },
     ),
   ],
 );
