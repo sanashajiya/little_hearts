@@ -130,7 +130,7 @@ class CreditsScreen extends StatelessWidget {
                               size: 20,
                               color: Colors.white,
                             ),
-                            onPressed: () => context.pop(),
+                            onPressed: () => context.go('/female/explore', extra: mode),
                           ),
                           Expanded(
                             child: Center(

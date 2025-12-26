@@ -6,11 +6,11 @@ import '../../../../../core/theme/zone_theme.dart';
 import '../bloc/go_online_bloc.dart';
 import '../bloc/go_online_event.dart';
 import '../bloc/go_online_state.dart';
-import '../widgets/female_app_bar.dart';
 import '../widgets/call_toggle_row.dart';
 import '../widgets/monthly_bonus_card.dart';
 import '../widgets/bonus_rewards_card.dart';
 import '../../../explore/presentation/widgets/female_bottom_navigation_bar.dart';
+import 'package:go_router/go_router.dart';
 
 class GoOnlineScreen extends StatelessWidget {
   const GoOnlineScreen({super.key});
@@ -52,7 +52,7 @@ class GoOnlineScreen extends StatelessWidget {
                             size: 20,
                             color: Colors.white,
                           ),
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: () =>  context.go('/female/explore', extra: mode),
                         ),
                         Expanded(
                           child: Center(

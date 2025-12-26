@@ -26,17 +26,17 @@ class FemaleExploreAppBar extends StatelessWidget {
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               decoration: BoxDecoration(
-                color: const Color(0xFFFEF9C3),
+                color:  Colors.white,
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Row(
                 children: [
-                  const Icon(
-                    Icons.star,
-                    size: 18,
-                    color: AppColors.textPrimary,
+                  Image.asset(
+                    'assets/icons/star.png',
+                    width: 24,
+                    height: 24,
                   ),
                   const SizedBox(width: 4),
                   CustomText(
@@ -51,8 +51,8 @@ class FemaleExploreAppBar extends StatelessWidget {
             const SizedBox(width: 12),
             Image.asset(
               'assets/icons/chat.png',
-              width: 23,
-              height: 23,
+              width: 24,
+              height: 24,
             ),
           ],
         ),
