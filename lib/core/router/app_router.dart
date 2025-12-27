@@ -27,6 +27,8 @@ import '../../features/female/credits/presentation/screens/pan_verification_scre
 import '../../features/female/credits/presentation/screens/bank_details_screen.dart';
 import '../../features/female/profile/presentation/screens/female_profile_screen.dart';
 import '../../features/female/profile/presentation/screens/female_view_profile_screen.dart';
+import '../../features/hangout/presentation/screens/hangout_zone_screen.dart';
+import '../../features/hangout/presentation/screens/create_hangout_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -192,6 +194,15 @@ final appRouter = GoRouter(
         final userId = extra is String ? extra : null;
         return FemaleViewProfileScreen(userId: userId);
       },
+    ),
+    // Hangout Routes
+    GoRoute(
+      path: '/hangout/zone',
+      builder: (context, state) => const HangoutZoneScreen(),
+    ),
+    GoRoute(
+      path: '/hangout/create',
+      builder: (context, state) => const CreateHangoutScreen(),
     ),
     
   ],

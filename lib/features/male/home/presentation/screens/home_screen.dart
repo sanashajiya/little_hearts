@@ -394,7 +394,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: 'HangOut Zone',
             asset: 'assets/images/hangout_zone.png',
             onTap: () {
-              // TODO: Dispatch HangOut Zone navigation event via Bloc
+              context.push('/hangout/zone');
             },
           ),
         ],
