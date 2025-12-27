@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/live_room_host.dart';
@@ -16,16 +17,26 @@ class LiveHostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 24,
-        vertical: 12,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.hangoutModeLight.withOpacity(0.35),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
+    // Determine if host is male based on profile image path
+    final isMale = host.profileImage.contains('male') || 
+                   host.profileImage.contains('gstar') ||
+                   host.profileImage.contains('most_engaged');
+    return GestureDetector(
+      onTap: () => context.push('/hangout/view-profile', extra: {
+        'name': host.name,
+        'profileImage': host.profileImage,
+        'isMale': isMale,
+      }),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 24,
+          vertical: 12,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.hangoutModeLight.withOpacity(0.35),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           /// Host Image with Glow Effect
@@ -122,6 +133,7 @@ class LiveHostCard extends StatelessWidget {
             color: AppColors.black,
           ),
         ],
+      ),
       ),
     );
   }

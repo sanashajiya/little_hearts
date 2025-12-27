@@ -30,6 +30,7 @@ import '../../features/female/profile/presentation/screens/female_view_profile_s
 import '../../features/hangout/presentation/screens/hangout_zone_screen.dart';
 import '../../features/hangout/presentation/screens/create_hangout_screen.dart';
 import '../../features/hangout/presentation/screens/audio_live_room_screen.dart';
+import '../../features/hangout/presentation/screens/hangout_view_profile_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -215,6 +216,27 @@ final appRouter = GoRouter(
           return AudioLiveRoomScreen(roomId: roomId, topic: topic);
         }
         return AudioLiveRoomScreen(roomId: '', topic: 'Love');
+      },
+    ),
+    GoRoute(
+      path: '/hangout/view-profile',
+      builder: (context, state) {
+        final extra = state.extra;
+        if (extra is Map) {
+          final name = extra['name'] as String? ?? 'User';
+          final profileImage = extra['profileImage'] as String? ?? 'assets/images/female1.png';
+          final isMale = extra['isMale'] as bool? ?? false;
+          return HangoutViewProfileScreen(
+            name: name,
+            profileImage: profileImage,
+            isMale: isMale,
+          );
+        }
+        return const HangoutViewProfileScreen(
+          name: 'User',
+          profileImage: 'assets/images/female1.png',
+          isMale: false,
+        );
       },
     ),
     

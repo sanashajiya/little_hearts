@@ -5,6 +5,7 @@ import '../../domain/entities/hangout_user.dart';
 import 'language_badge.dart';
 import 'rating_stars.dart';
 import 'topic_chip.dart';
+import 'package:go_router/go_router.dart';
 
 /// Hangout User Card Widget
 class HangoutUserCard extends StatelessWidget {
@@ -19,8 +20,17 @@ class HangoutUserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine if user is male based on profile image path
+    final isMale = user.profileImage.contains('male') || 
+                   user.profileImage.contains('gstar') ||
+                   user.profileImage.contains('most_engaged');
+    
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => context.push('/hangout/view-profile', extra: {
+        'name': user.name,
+        'profileImage': user.profileImage,
+        'isMale': isMale,
+      }),
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/live_room_participant.dart';
@@ -16,38 +17,48 @@ class ParticipantAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size + 24,
-      padding: const EdgeInsets.symmetric(
-        vertical: 12,
-        horizontal: 12,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.hangoutModeLight.withOpacity(0.35),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        // mainAxisSize: MainAxisSi.ze.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          /// Avatar
-          Container(
-            width: size,
-            height: size,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppColors.hangoutMode,
-                width: 2,
+    // Determine if participant is male based on profile image path
+    final isMale = participant.profileImage.contains('male') || 
+                   participant.profileImage.contains('gstar') ||
+                   participant.profileImage.contains('most_engaged');
+    return GestureDetector(
+      onTap: () => context.push('/hangout/view-profile', extra: {
+        'name': participant.name,
+        'profileImage': participant.profileImage,
+        'isMale': isMale,
+      }),
+      child: Container(
+        width: size + 24,
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 12,
+        ),
+        decoration: BoxDecoration(
+          color: AppColors.hangoutModeLight.withOpacity(0.35),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          // mainAxisSize: MainAxisSi.ze.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            /// Avatar
+            Container(
+              width: size,
+              height: size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppColors.hangoutMode,
+                  width: 2,
+                ),
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  participant.profileImage,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            child: ClipOval(
-              child: Image.asset(
-                participant.profileImage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
 
           const SizedBox(height: 4),
 
@@ -62,6 +73,7 @@ class ParticipantAvatar extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ],
+      ),
       ),
     );
   }
