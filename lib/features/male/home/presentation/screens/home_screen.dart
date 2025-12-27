@@ -202,7 +202,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Row(
           children: [
-            _circleIcon('assets/icons/leaderboard.png'),
+            GestureDetector(
+              onTap: () => context.push('/leaderboard'),
+              child: _circleIcon('assets/icons/leaderboard.png'),
+            ),
             const SizedBox(width: 10),
             _circleIcon('assets/icons/chat.png'),
             const SizedBox(width: 10),

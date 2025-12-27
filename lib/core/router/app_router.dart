@@ -31,6 +31,8 @@ import '../../features/hangout/presentation/screens/hangout_zone_screen.dart';
 import '../../features/hangout/presentation/screens/create_hangout_screen.dart';
 import '../../features/hangout/presentation/screens/audio_live_room_screen.dart';
 import '../../features/hangout/presentation/screens/hangout_view_profile_screen.dart';
+import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
+import '../../features/leaderboard/domain/entities/leaderboard_zone.dart';
 
 
 final appRouter = GoRouter(
@@ -237,6 +239,17 @@ final appRouter = GoRouter(
           profileImage: 'assets/images/female1.png',
           isMale: false,
         );
+      },
+    ),
+    // Leaderboard Route
+    GoRoute(
+      path: '/leaderboard',
+      builder: (context, state) {
+        final extra = state.extra;
+        final initialZone = extra is LeaderboardZone
+            ? extra
+            : null;
+        return LeaderboardScreen(initialZone: initialZone);
       },
     ),
     
