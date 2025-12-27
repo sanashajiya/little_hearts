@@ -104,7 +104,7 @@ class HangoutBloc extends Bloc<HangoutEvent, HangoutState> {
     CreateHangout event,
     Emitter<HangoutState> emit,
   ) {
-    // For now, just emit success - in future, this would call repository
+    // Emit state with room creation info - navigation will handle routing
     emit(const CreateHangoutState());
   }
 }

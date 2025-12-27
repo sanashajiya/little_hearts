@@ -29,6 +29,7 @@ import '../../features/female/profile/presentation/screens/female_profile_screen
 import '../../features/female/profile/presentation/screens/female_view_profile_screen.dart';
 import '../../features/hangout/presentation/screens/hangout_zone_screen.dart';
 import '../../features/hangout/presentation/screens/create_hangout_screen.dart';
+import '../../features/hangout/presentation/screens/audio_live_room_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -203,6 +204,18 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/hangout/create',
       builder: (context, state) => const CreateHangoutScreen(),
+    ),
+    GoRoute(
+      path: '/hangout/live-room',
+      builder: (context, state) {
+        final extra = state.extra;
+        if (extra is Map) {
+          final roomId = extra['roomId'] as String? ?? '';
+          final topic = extra['topic'] as String? ?? 'Love';
+          return AudioLiveRoomScreen(roomId: roomId, topic: topic);
+        }
+        return AudioLiveRoomScreen(roomId: '', topic: 'Love');
+      },
     ),
     
   ],

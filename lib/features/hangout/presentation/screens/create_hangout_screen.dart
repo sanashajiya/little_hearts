@@ -53,14 +53,28 @@ class _CreateHangoutViewState extends State<_CreateHangoutView> {
   void _onCreate() {
     final state = context.read<HangoutBloc>().state;
     if (state is CreateHangoutState && state.canCreate) {
+      final topic = _topicController.text.trim();
+      final isAudio = state.selectedZone!;
+      
       context.read<HangoutBloc>().add(
             CreateHangout(
-              isAudio: state.selectedZone!,
-              topic: state.topic.trim(),
+              isAudio: isAudio,
+              topic: topic,
             ),
           );
-      // Navigate back after creation
-      context.pop();
+      
+      // Navigate to live room screen for audio zone
+      if (isAudio) {
+        // Generate a room ID (in real app, this would come from API)
+        final roomId = DateTime.now().millisecondsSinceEpoch.toString();
+        context.push('/hangout/live-room', extra: {
+          'roomId': roomId,
+          'topic': topic,
+        });
+      } else {
+        // For video zone, navigate back (or to video room in future)
+        context.pop();
+      }
     }
   }
 
