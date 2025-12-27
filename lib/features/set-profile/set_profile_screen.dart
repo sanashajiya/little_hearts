@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/constants/custom_text.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../bloc/profile_setup_bloc.dart';
-import '../bloc/profile_setup_event.dart';
-import '../bloc/profile_setup_state.dart';
-import '../widgets/avatar_selection_widget.dart';
-import '../widgets/gender_selection_widget.dart';
-import '../widgets/progress_indicator.dart' as pi;
+import '../../core/constants/custom_text.dart';
+import '../../core/theme/app_colors.dart';
+import '../male/profile/presentation/bloc/profile_setup_bloc.dart';
+import '../male/profile/presentation/bloc/profile_setup_event.dart';
+import '../male/profile/presentation/bloc/profile_setup_state.dart';
+import '../male/profile/presentation/widgets/avatar_selection_widget.dart';
+import '../male/profile/presentation/widgets/gender_selection_widget.dart';
+import '../male/profile/presentation/widgets/progress_indicator.dart' as pi;
 
 class SetProfileScreen extends StatefulWidget {
   final VoidCallback onContinue;
@@ -65,16 +65,16 @@ class _SetProfileScreenState extends State<SetProfileScreen> {
                 Row(
                   children: [
                     // Back arrow
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios_new,
-                        size: 18,
-                        color: AppColors.black,
-                      ),
-                    ),
+                    // IconButton(
+                    //   onPressed: () {
+                    //     Navigator.pop(context);
+                    //   },
+                    //   icon: const Icon(
+                    //     Icons.arrow_back_ios_new,
+                    //     size: 18,
+                    //     color: AppColors.black,
+                    //   ),
+                    // ),
 
                     const SizedBox(width: 8),
 

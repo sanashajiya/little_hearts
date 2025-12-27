@@ -43,7 +43,7 @@ class OnboardingPage extends StatelessWidget {
           //   _showTermsDialog(context);
           // }
           if (state.step == OnboardingStep.completed) {
-            context.go('/profile');
+            context.go('/profile-setup');
           }
         },
         builder: (context, state) {

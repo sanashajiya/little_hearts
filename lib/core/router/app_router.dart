@@ -8,7 +8,7 @@ import '../cubit/zone_cubit.dart';
 import '../cubit/user_cubit.dart' show UserCubit, Gender;
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
-import '../../features/male/profile/presentation/pages/profile_page.dart';
+import '../../features/set-profile/pages/profile_page.dart';
 import '../../features/male/profile/presentation/screens/profile_screen.dart';
 import '../../features/male/profile/presentation/screens/followers_screen.dart';
 import '../../features/male/profile/presentation/screens/edit_profile_screen.dart';
@@ -44,7 +44,7 @@ final appRouter = GoRouter(
       path: '/onboarding',
       builder: (context, state) => const OnboardingPage(),
     ),
-    GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
+    GoRoute(path: '/profile-setup', builder: (context, state) => const ProfilePage()),
     GoRoute(
       path: '/male/profile_screen',
       builder: (context, state) => const ProfileScreen(),

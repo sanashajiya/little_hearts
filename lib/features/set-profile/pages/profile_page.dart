@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../core/constants/custom_text.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/cubit/user_cubit.dart';
-import '../bloc/profile_setup_bloc.dart';
-import '../bloc/profile_setup_event.dart';
-import '../bloc/profile_setup_state.dart';
-import '../screens/date_of_birth_screen.dart';
-import '../screens/languages_selection_screen.dart';
-import '../screens/set_profile_screen.dart';
+import '../../../core/constants/custom_text.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/cubit/user_cubit.dart';
+import '../../male/profile/presentation/bloc/profile_setup_bloc.dart';
+import '../../male/profile/presentation/bloc/profile_setup_event.dart';
+import '../../male/profile/presentation/bloc/profile_setup_state.dart';
+import '../date_of_birth_screen.dart';
+import '../languages_selection_screen.dart';
+import '../set_profile_screen.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

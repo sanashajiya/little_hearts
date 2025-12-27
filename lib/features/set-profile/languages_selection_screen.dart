@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/constants/custom_text.dart';
+import '../male/profile/presentation/bloc/profile_setup_bloc.dart';
+import '../male/profile/presentation/bloc/profile_setup_event.dart';
+import '../male/profile/presentation/bloc/profile_setup_state.dart';
+import '../male/profile/presentation/widgets/progress_indicator.dart' as pi;
+import '../male/profile/presentation/widgets/language_selection_widget.dart';
 
-import '../../../../../core/constants/custom_text.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../bloc/profile_setup_bloc.dart';
-import '../bloc/profile_setup_event.dart';
-import '../bloc/profile_setup_state.dart';
-import '../widgets/date_of_birth_picker_widget.dart';
-import '../widgets/progress_indicator.dart' as pi;
-
-class DateOfBirthScreen extends StatelessWidget {
-  final VoidCallback onContinue;
+class LanguagesSelectionScreen extends StatelessWidget {
+  final VoidCallback onFinish;
   final VoidCallback onBack;
 
-  const DateOfBirthScreen({
+  const LanguagesSelectionScreen({
     super.key,
-    required this.onContinue,
+    required this.onFinish,
     required this.onBack,
   });
 
@@ -44,7 +43,7 @@ class DateOfBirthScreen extends StatelessWidget {
                     Expanded(
                       child: pi.StepProgressIndicator(
                         totalSteps: 3,
-                        currentStep: 2,
+                        currentStep: 3,
                       ),
                     ),
                   ],
@@ -54,8 +53,8 @@ class DateOfBirthScreen extends StatelessWidget {
                 // Title
                 const Center(
                   child: CustomText(
-                    text: 'When is your Birth Day?',
-                    fontSize: 24,
+                    text: 'Languages You Speak',
+                    fontSize: 28,
                     fontWeight: FontWeightType.bold,
                     color: AppColors.primary,
                     textAlign: TextAlign.center,
@@ -66,8 +65,18 @@ class DateOfBirthScreen extends StatelessWidget {
                 // Description
                 const Center(
                   child: CustomText(
-                    text: 'Select your birth year to complete your profile.',
+                    text: 'Connect with Friends Who Speak Your Language',
                     fontSize: 14,
+                    fontWeight: FontWeightType.regular,
+                    color: AppColors.black,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                const Center(
+                  child: CustomText(
+                    text: 'you can select up to 2 languages',
+                    fontSize: 12,
                     fontWeight: FontWeightType.regular,
                     color: AppColors.black,
                     textAlign: TextAlign.center,
@@ -75,51 +84,41 @@ class DateOfBirthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 32),
 
-                // Birthday Image
-                Center(
-                  child: Image.asset(
-                    'assets/images/birthday.png',
-                    height: 220,
-                    fit: BoxFit.contain,
-                  ),
+                // Language Selection Widget
+                LanguageSelectionWidget(
+                  selectedLanguages: state.selectedLanguages,
+                  onLanguageSelected: (language) {
+                    context.read<ProfileSetupBloc>().add(
+                          LanguageSelected(language),
+                        );
+                  },
+                  onLanguageDeselected: (language) {
+                    context.read<ProfileSetupBloc>().add(
+                          LanguageDeselected(language),
+                        );
+                  },
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 14),
 
-                // Date of Birth Picker
+                // Finish Button
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: DateOfBirthPickerWidget(
-                    selectedDate: state.dateOfBirth ?? DateTime(1993, 4, 27),
-                    onDateSelected: (date) {
-                      context.read<ProfileSetupBloc>().add(
-                        DateOfBirthChanged(date),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 48),
-
-                // Continue Button
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   child: SizedBox(
                     width: double.infinity,
                     height: 52,
                     child: ElevatedButton(
-                      onPressed: state.canProgressFromScreen2
-                          ? onContinue
-                          : null,
+                      onPressed: state.canFinish ? onFinish : null,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: state.canProgressFromScreen2
+                        backgroundColor: state.canFinish
                             ? AppColors.primary
                             : AppColors.buttonDisabled,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        elevation: state.canProgressFromScreen2 ? 4 : 0,
+                        elevation: state.canFinish ? 4 : 0,
                       ),
                       child: const CustomText(
-                        text: 'Continue',
+                        text: 'Finish',
                         fontSize: 16,
                         fontWeight: FontWeightType.bold,
                         color: Colors.white,
