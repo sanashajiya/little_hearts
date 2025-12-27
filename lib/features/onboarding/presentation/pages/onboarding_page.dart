@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:little_hearts/core/theme/app_colors.dart';
+import 'package:go_router/go_router.dart';
 import '../../domain/entities/onboarding_content.dart';
 import '../bloc/onboarding_bloc.dart';
 import '../bloc/onboarding_event.dart';
 import '../bloc/onboarding_state.dart';
-import '../widgets/onboarding_image_slider.dart';
 import '../widgets/bottom_sheet_initial.dart';
-import '../widgets/bottom_sheet_phone.dart';
 import '../widgets/bottom_sheet_otp.dart';
+import '../widgets/bottom_sheet_phone.dart';
+import '../widgets/onboarding_image_slider.dart';
 import '../widgets/terms_dialog.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -39,9 +39,9 @@ class OnboardingPage extends StatelessWidget {
       create: (_) => OnboardingBloc(),
       child: BlocConsumer<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
-          if (state.showTermsDialog) {
-            _showTermsDialog(context);
-          }
+          // if (state.showTermsDialog) {
+          //   _showTermsDialog(context);
+          // }
           if (state.step == OnboardingStep.completed) {
             context.go('/profile');
           }
@@ -103,7 +103,8 @@ class OnboardingPage extends StatelessWidget {
             );
           },
           onTermsTextClicked: () {
-            context.read<OnboardingBloc>().add(OnboardingShowTermsDialog());
+            _showTermsDialog(context);
+            // context.read<OnboardingBloc>().add(OnboardingShowTermsDialog());
           },
         );
       case OnboardingStep.verifyOtp:
