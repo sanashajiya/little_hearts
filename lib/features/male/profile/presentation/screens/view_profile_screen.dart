@@ -75,7 +75,7 @@ class _ViewProfileView extends StatelessWidget {
                             ProfileMetaInfo(
                               name: state.profile.name,
                               age: state.profile.age,
-                              lastSeen: state.profile.lastSeen,
+                              // lastSeen: state.profile.lastSeen,
                               birthday: state.profile.birthday,
                               location: state.profile.location,
                             ),

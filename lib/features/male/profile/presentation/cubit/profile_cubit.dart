@@ -12,7 +12,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     final profile = ProfileData(
       name: 'Revanth',
       age: 26,
-      lastSeen: 'Last Seen on sat, 29th 2025',
+      // lastSeen: 'Last Seen on sat, 29th 2025',
       location: 'Hyderabad',
       bio: 'Fun and adventurous. I\'m not afraid to try new things and I love to be spontaneous. I want someone who is always up for an adventure, whether it\'s trying a new restaurant, going on a hike, or traveling to a new country.',
       followersCount: 5,

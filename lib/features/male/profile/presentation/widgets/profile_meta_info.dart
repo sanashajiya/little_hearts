@@ -9,7 +9,7 @@ import '../../../../../core/cubit/zone_cubit.dart';
 class ProfileMetaInfo extends StatelessWidget {
   final String name;
   final int age;
-  final String lastSeen;
+  // final String lastSeen;
   final String birthday;
   final String location;
 
@@ -17,7 +17,7 @@ class ProfileMetaInfo extends StatelessWidget {
     super.key,
     required this.name,
     required this.age,
-    required this.lastSeen,
+    // required this.lastSeen,
     required this.birthday,
     required this.location,
   });
@@ -40,13 +40,13 @@ class ProfileMetaInfo extends StatelessWidget {
               fontWeight: FontWeightType.bold,
               color: AppColors.white,
             ),
-            const SizedBox(width: 16),
-            CustomText(
-              text: lastSeen,
-              fontSize: 12,
-              fontWeight: FontWeightType.regular,
-              color: AppColors.white,
-            ),
+            // const SizedBox(width: 16),
+            // CustomText(
+            //   text: lastSeen,
+            //   fontSize: 12,
+            //   fontWeight: FontWeightType.regular,
+            //   color: AppColors.white,
+            // ),
           ],
         ),
         const SizedBox(height: 4),

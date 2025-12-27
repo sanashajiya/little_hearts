@@ -90,14 +90,14 @@ class ProfileInfoSection extends StatelessWidget {
           fontWeight: FontWeightType.bold,
           color: AppColors.white,
         ),
-        const SizedBox(height: 6),
-        // Last Seen
-        CustomText(
-          text: profile.lastSeen,
-          fontSize: 12,
-          fontWeight: FontWeightType.regular,
-          color: AppColors.white,
-        ),
+        // const SizedBox(height: 6),
+        // // Last Seen
+        // CustomText(
+        //   text: profile.lastSeen,
+        //   fontSize: 12,
+        //   fontWeight: FontWeightType.regular,
+        //   color: AppColors.white,
+        // ),
         const SizedBox(height: 4),
         // Location
         CustomText(

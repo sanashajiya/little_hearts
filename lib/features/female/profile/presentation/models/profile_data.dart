@@ -1,7 +1,7 @@
 class ProfileData {
   final String name;
   final int age;
-  final String lastSeen;
+  // final String lastSeen;
   final String location;
   final String bio;
   final int followersCount;
@@ -14,7 +14,7 @@ class ProfileData {
   ProfileData({
     required this.name,
     required this.age,
-    required this.lastSeen,
+    // required this.lastSeen,
     required this.location,
     required this.bio,
     required this.followersCount,

@@ -10,7 +10,7 @@ class ViewProfileCubit extends Cubit<ViewProfileState> {
     final profile = ViewProfileData(
       name: 'Meghana',
       age: 26,
-      lastSeen: 'Last seen on sat, 29th 2025',
+      // lastSeen: 'Last seen on sat, 29th 2025',
       birthday: 'Birthday – 27th March 2003',
       location: 'Hyderabad',
       followersCount: 200,
@@ -50,7 +50,7 @@ class ViewProfileLoaded extends ViewProfileState {
 class ViewProfileData {
   final String name;
   final int age;
-  final String lastSeen;
+  // final String lastSeen;
   final String birthday;
   final String location;
   final int followersCount;
@@ -70,7 +70,7 @@ class ViewProfileData {
   ViewProfileData({
     required this.name,
     required this.age,
-    required this.lastSeen,
+    // required this.lastSeen,
     required this.birthday,
     required this.location,
     required this.followersCount,
