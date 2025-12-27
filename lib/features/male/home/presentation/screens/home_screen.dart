@@ -209,7 +209,10 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 10),
             _circleIcon('assets/icons/chat.png'),
             const SizedBox(width: 10),
-            _circleIcon('assets/icons/notification.png'),
+            GestureDetector(
+              onTap: () => context.push('/notifications'),
+              child: _circleIcon('assets/icons/notification.png'),
+            ),
           ],
         ),
       ],

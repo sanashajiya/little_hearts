@@ -33,6 +33,7 @@ import '../../features/hangout/presentation/screens/audio_live_room_screen.dart'
 import '../../features/hangout/presentation/screens/hangout_view_profile_screen.dart';
 import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
 import '../../features/leaderboard/domain/entities/leaderboard_zone.dart';
+import '../../features/notifications/presentation/screens/notifications_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -251,6 +252,11 @@ final appRouter = GoRouter(
             : null;
         return LeaderboardScreen(initialZone: initialZone);
       },
+    ),
+    // Notifications Route
+    GoRoute(
+      path: '/notifications',
+      builder: (context, state) => const NotificationsScreen(),
     ),
     
   ],
