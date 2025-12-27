@@ -66,3 +66,4 @@ class BankDetailsBloc extends Bloc<BankDetailsEvent, BankDetailsState> {
   }
 }
 
+

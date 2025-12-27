@@ -69,10 +69,10 @@ class FemaleBottomNavigationBar extends StatelessWidget {
                 label: 'Profile',
                 isSelected: selectedItem == FemaleBottomNavItem.profile,
                 onTap: () {
-                  // TODO: Navigate to profile screen when implemented
-                  // context.go('/profile_screen');
+                  context.go('/female/profile-screen', extra: mode);
                 },
-                // onTap: () => context.go('/profile_screen'),
+                // onTap: () => context.go('female/profile_screen', extra: mode),
+  // },
                 zoneTheme: zoneTheme,
               ),
             ],

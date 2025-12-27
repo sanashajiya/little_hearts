@@ -60,3 +60,4 @@ class BankDetailsSubmitted extends BankDetailsEvent {
   const BankDetailsSubmitted();
 }
 
+

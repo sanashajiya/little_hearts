@@ -21,7 +21,7 @@ class BuddyCard extends StatelessWidget {
     final theme = ZoneTheme.fromMode(mode);
 
     return GestureDetector(
-      // onTap: () => context.push('/view-profile', extra: buddy.name),
+      onTap: () => context.push('/female/view-profile', extra: buddy.name),
       child: Stack(
         children: [
           Container(
@@ -130,5 +130,6 @@ class BuddyCard extends StatelessWidget {
     }
   }
 }
+
 
 

@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:little_hearts/features/female/profile/presentation/screens/female_blocked_users_screen.dart';
+import 'package:little_hearts/features/female/profile/presentation/screens/female_edit_profile_screen.dart';
+import 'package:little_hearts/features/female/profile/presentation/screens/female_followers_screen.dart';
 import '../theme/zone_theme.dart';
 import '../cubit/zone_cubit.dart';
 import '../cubit/user_cubit.dart' show UserCubit, Gender;
@@ -22,6 +25,8 @@ import '../../features/female/go_online/presentation/screens/go_online_screen.da
 import '../../features/female/credits/presentation/screens/credits_screen.dart';
 import '../../features/female/credits/presentation/screens/pan_verification_screen.dart';
 import '../../features/female/credits/presentation/screens/bank_details_screen.dart';
+import '../../features/female/profile/presentation/screens/female_profile_screen.dart';
+import '../../features/female/profile/presentation/screens/female_view_profile_screen.dart';
 
 
 final appRouter = GoRouter(
@@ -34,7 +39,7 @@ final appRouter = GoRouter(
     ),
     GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
     GoRoute(
-      path: '/profile_screen',
+      path: '/male/profile_screen',
       builder: (context, state) => const ProfileScreen(),
     ),
     GoRoute(
@@ -158,5 +163,36 @@ final appRouter = GoRouter(
       path: '/female/bank-details',
       builder: (context, state) => const BankDetailsScreen(),
     ),
+    GoRoute(
+      path: '/female/profile-screen',
+      builder: (context, state) => const FemaleProfileScreen(),
+    ),
+    GoRoute(
+      path: '/female/edit-profile',
+      builder: (context, state) => const FemaleEditProfileScreen(),
+    ),
+    GoRoute(
+      path: '/female/blocked-users',
+      builder: (context, state) => const FemaleBlockedUsersScreen(),
+    ),
+    GoRoute(
+      path: '/female/followers',
+      builder: (context, state) {
+        final extra = state.extra;
+        final type = extra is Map
+            ? (extra['type'] as String? ?? 'followers')
+            : 'followers';
+        return FemaleFollowersScreen(type: type);
+      },
+    ),
+    GoRoute(
+      path: '/female/view-profile',
+      builder: (context, state) {
+        final extra = state.extra;
+        final userId = extra is String ? extra : null;
+        return FemaleViewProfileScreen(userId: userId);
+      },
+    ),
+    
   ],
 );

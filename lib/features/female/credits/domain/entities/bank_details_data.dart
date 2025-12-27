@@ -28,3 +28,4 @@ class BankDetailsData {
   bool get isValid => hasBankDetails || hasUpiId;
 }
 
+

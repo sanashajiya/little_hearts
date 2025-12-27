@@ -68,3 +68,4 @@ class GoOnlineBloc extends Bloc<GoOnlineEvent, GoOnlineState> {
   }
 }
 
+

@@ -12,3 +12,4 @@ class PanVerificationData {
   bool get isValid => panNumber.isNotEmpty && frontSideImagePath != null && backSideImagePath != null;
 }
 
+

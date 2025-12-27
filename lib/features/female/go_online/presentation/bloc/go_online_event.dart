@@ -29,3 +29,4 @@ class VideoCallToggled extends GoOnlineEvent {
   List<Object?> get props => [isEnabled];
 }
 
+

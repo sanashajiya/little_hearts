@@ -25,7 +25,8 @@ class EngagedCard extends StatelessWidget {
     final theme = ZoneTheme.fromMode(mode);
 
     return GestureDetector(
-      // onTap: () => context.push('/view-profile', extra: mostEngaged.name),
+      onTap: () => context.push('/female/view-profile', extra: mostEngaged.name),
+
       child: Stack(
         children: [
           Container(
@@ -146,5 +147,6 @@ class EngagedCard extends StatelessWidget {
     }
   }
 }
+
 
 
