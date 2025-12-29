@@ -31,10 +31,12 @@ import '../../features/hangout/presentation/screens/hangout_zone_screen.dart';
 import '../../features/hangout/presentation/screens/create_hangout_screen.dart';
 import '../../features/hangout/presentation/screens/audio_live_room_screen.dart';
 import '../../features/hangout/presentation/screens/hangout_view_profile_screen.dart';
+import '../../features/hangout/presentation/screens/hangout_credits_screen.dart';
+import '../../features/hangout/presentation/screens/hangout_pan_verification_screen.dart';
+import '../../features/hangout/presentation/screens/hangout_bank_details_screen.dart';
 import '../../features/leaderboard/presentation/screens/leaderboard_screen.dart';
 import '../../features/leaderboard/domain/entities/leaderboard_zone.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
-
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -44,7 +46,10 @@ final appRouter = GoRouter(
       path: '/onboarding',
       builder: (context, state) => const OnboardingPage(),
     ),
-    GoRoute(path: '/profile-setup', builder: (context, state) => const ProfilePage()),
+    GoRoute(
+      path: '/profile-setup',
+      builder: (context, state) => const ProfilePage(),
+    ),
     GoRoute(
       path: '/male/profile_screen',
       builder: (context, state) => const MaleProfileScreen(),
@@ -86,7 +91,7 @@ final appRouter = GoRouter(
         var userName = 'User';
         String? gender;
         bool showCompletionDialog = false;
-        
+
         // Try to get gender from route parameters first (for first-time navigation)
         if (extra is Map) {
           final untypedMap = extra.cast<dynamic, dynamic>();
@@ -98,19 +103,19 @@ final appRouter = GoRouter(
           showCompletionDialog =
               untypedMap['showCompletionDialog'] as bool? ?? false;
         }
-        
+
         // Fallback to UserCubit if gender not in route params
         // This ensures gender persists across navigation
         final userCubit = context.read<UserCubit>();
         if (gender == null && userCubit.state.gender != null) {
           gender = userCubit.state.gender == Gender.female ? 'female' : 'male';
         }
-        
+
         // Use username from UserCubit if available and route param is default
         if (userName == 'User' && userCubit.state.username != null) {
           userName = userCubit.state.username!;
         }
-        
+
         return HomeScreen(
           userName: userName,
           gender: gender,
@@ -227,7 +232,8 @@ final appRouter = GoRouter(
         final extra = state.extra;
         if (extra is Map) {
           final name = extra['name'] as String? ?? 'User';
-          final profileImage = extra['profileImage'] as String? ?? 'assets/images/female1.png';
+          final profileImage =
+              extra['profileImage'] as String? ?? 'assets/images/female1.png';
           final isMale = extra['isMale'] as bool? ?? false;
           return HangoutViewProfileScreen(
             name: name,
@@ -242,14 +248,25 @@ final appRouter = GoRouter(
         );
       },
     ),
+    // Hangout Credits Routes
+    GoRoute(
+      path: '/hangout/credits',
+      builder: (context, state) => const HangoutCreditsScreen(),
+    ),
+    GoRoute(
+      path: '/hangout/pan-verification',
+      builder: (context, state) => const HangoutPanVerificationScreen(),
+    ),
+    GoRoute(
+      path: '/hangout/bank-details',
+      builder: (context, state) => const HangoutBankDetailsScreen(),
+    ),
     // Leaderboard Route
     GoRoute(
       path: '/leaderboard',
       builder: (context, state) {
         final extra = state.extra;
-        final initialZone = extra is LeaderboardZone
-            ? extra
-            : null;
+        final initialZone = extra is LeaderboardZone ? extra : null;
         return LeaderboardScreen(initialZone: initialZone);
       },
     ),
@@ -258,6 +275,5 @@ final appRouter = GoRouter(
       path: '/notifications',
       builder: (context, state) => const NotificationsScreen(),
     ),
-    
   ],
 );

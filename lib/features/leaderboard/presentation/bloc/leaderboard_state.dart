@@ -46,3 +46,4 @@ class LeaderboardError extends LeaderboardState {
   List<Object?> get props => [message];
 }
 
+

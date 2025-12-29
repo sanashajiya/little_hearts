@@ -40,3 +40,4 @@ class ChangeLeaderboardType extends LeaderboardEvent {
   List<Object?> get props => [type];
 }
 
+

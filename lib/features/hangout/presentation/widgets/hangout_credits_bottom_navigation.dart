@@ -3,20 +3,15 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 
-/// Hangout Bottom Navigation Widget
-class HangoutBottomNavigation extends StatelessWidget {
-  final bool isAudio;
-  final Function(bool) onTabChanged;
-
-  const HangoutBottomNavigation({
-    super.key,
-    required this.isAudio,
-    required this.onTabChanged,
-  });
+/// Hangout Credits Bottom Navigation Bar
+/// Shows Home, Video Zone, Audio Zone with hangout theme
+class HangoutCreditsBottomNavigation extends StatelessWidget {
+  const HangoutCreditsBottomNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 70,
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: [
@@ -32,24 +27,25 @@ class HangoutBottomNavigation extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildTabItem(
+              context: context,
               icon: Icons.home,
               label: 'Home',
               isSelected: false,
-              onTap: () {
-                context.go('/home');
-              },
+              onTap: () => context.go('/home'),
             ),
             _buildTabItem(
+              context: context,
               icon: Icons.videocam,
               label: 'Video Zone',
-              isSelected: !isAudio,
-              onTap: () => onTabChanged(false),
+              isSelected: false,
+              onTap: () => context.go('/hangout/zone'),
             ),
             _buildTabItem(
+              context: context,
               icon: Icons.mic,
               label: 'Audio Zone',
-              isSelected: isAudio,
-              onTap: () => onTabChanged(true),
+              isSelected: false,
+              onTap: () => context.go('/hangout/zone'),
             ),
           ],
         ),
@@ -58,6 +54,7 @@ class HangoutBottomNavigation extends StatelessWidget {
   }
 
   Widget _buildTabItem({
+    required BuildContext context,
     required IconData icon,
     required String label,
     required bool isSelected,
@@ -68,15 +65,12 @@ class HangoutBottomNavigation extends StatelessWidget {
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          // decoration: BoxDecoration(
-          //   color: isSelected ? AppColors.hangoutModeDark : Colors.transparent,
-          // ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
-                color: isSelected ? AppColors.hangoutModeDark : AppColors.black,
+                color: isSelected ? AppColors.hangoutMode : AppColors.textSecondary,
                 size: 24,
               ),
               const SizedBox(height: 4),
@@ -84,7 +78,7 @@ class HangoutBottomNavigation extends StatelessWidget {
                 text: label,
                 fontSize: 12,
                 fontWeight: FontWeightType.medium,
-                color: isSelected ? AppColors.hangoutModeDark : AppColors.black,
+                color: isSelected ? AppColors.hangoutMode : AppColors.textSecondary,
               ),
             ],
           ),
@@ -93,5 +87,4 @@ class HangoutBottomNavigation extends StatelessWidget {
     );
   }
 }
-
 

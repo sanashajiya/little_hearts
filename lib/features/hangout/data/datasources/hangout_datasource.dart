@@ -6,3 +6,4 @@ abstract class HangoutDataSource {
   Future<List<HangoutUser>> searchHangoutUsers(String query, {bool isAudio = false});
 }
 
+

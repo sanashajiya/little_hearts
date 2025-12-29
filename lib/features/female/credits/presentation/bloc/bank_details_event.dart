@@ -61,3 +61,4 @@ class BankDetailsSubmitted extends BankDetailsEvent {
 }
 
 
+

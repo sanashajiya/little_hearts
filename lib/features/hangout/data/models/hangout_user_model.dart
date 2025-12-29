@@ -25,3 +25,4 @@ class HangoutUserModel extends HangoutUser {
   }
 }
 
+

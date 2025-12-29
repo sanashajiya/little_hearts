@@ -57,3 +57,4 @@ class BankDetailsState extends Equatable {
 }
 
 
+

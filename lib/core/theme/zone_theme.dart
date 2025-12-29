@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-enum ZoneMode {
-  friend,
-  date,
-}
+enum ZoneMode { friend, date, hangout }
 
 class ZoneTheme {
   final Color primary;
@@ -32,8 +29,12 @@ class ZoneTheme {
           dark: AppColors.friendModeDark,
           light: AppColors.friendModeLight,
         );
+      case ZoneMode.hangout:
+        return const ZoneTheme(
+          primary: AppColors.hangoutMode,
+          dark: AppColors.hangoutModeDark,
+          light: AppColors.hangoutModeLight,
+        );
     }
   }
 }
-
-

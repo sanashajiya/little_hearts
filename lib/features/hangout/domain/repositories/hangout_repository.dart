@@ -9,3 +9,4 @@ abstract class HangoutRepository {
   Future<List<HangoutUser>> searchHangoutUsers(String query, {bool isAudio = false});
 }
 
+
