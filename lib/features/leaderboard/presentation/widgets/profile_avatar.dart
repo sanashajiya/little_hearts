@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:little_hearts/core/theme/app_colors.dart';
 
 class ProfileAvatar extends StatelessWidget {
   final String imagePath;

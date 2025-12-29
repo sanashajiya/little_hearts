@@ -223,8 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       children: [
         Container(
-          width: 32,
-          height: 32,
+          width: 48,
+          height: 48,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             // border: Border.all(
@@ -343,7 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           );
         },
-        separatorBuilder: (_, __) => const SizedBox(width: 16),
+        separatorBuilder: (_, __) => const SizedBox(width: 6),
         itemCount: stories.length,
       ),
     );

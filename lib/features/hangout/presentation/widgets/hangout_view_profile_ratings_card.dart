@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -48,11 +49,7 @@ class HangoutViewProfileRatingsCard extends StatelessWidget {
             children: [
               ...List.generate(5, (index) {
                 if (index < rating.floor()) {
-                  return const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 22,
-                  );
+                  return const Icon(Icons.star, color: Colors.amber, size: 22);
                 } else if (index < rating) {
                   return const Icon(
                     Icons.star_half,
@@ -81,23 +78,32 @@ class HangoutViewProfileRatingsCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _buildStatCard(
-                  label: 'Conversation Minutes',
-                  value: '$conversationMinutes Mins',
+                child: SizedBox(
+                  height: 90,
+                  child: _buildStatCard(
+                    label: 'Conversation Minutes',
+                    value: '$conversationMinutes Mins',
+                  ),
                 ),
               ),
               const SizedBox(width: 4),
               Expanded(
-                child: _buildStatCard(
-                  label: 'Stars Gifted',
-                  value: starsGifted.toString(),
+                child: SizedBox(
+                  height: 90,
+                  child: _buildStatCard(
+                    label: 'Stars Gifted',
+                    value: starsGifted.toString(),
+                  ),
                 ),
               ),
               const SizedBox(width: 4),
               Expanded(
-                child: _buildStatCard(
-                  label: 'Following Since',
-                  value: followingSince,
+                child: SizedBox(
+                  height: 90,
+                  child: _buildStatCard(
+                    label: 'Following Since',
+                    value: followingSince,
+                  ),
                 ),
               ),
             ],
@@ -107,18 +113,15 @@ class HangoutViewProfileRatingsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard({
-    required String label,
-    required String value,
-  }) {
+  Widget _buildStatCard({required String label, required String value}) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      // padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
         color: AppColors.hangoutMode,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomText(
             text: label,
@@ -140,5 +143,3 @@ class HangoutViewProfileRatingsCard extends StatelessWidget {
     );
   }
 }
-
-

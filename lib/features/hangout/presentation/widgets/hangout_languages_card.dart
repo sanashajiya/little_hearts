@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/constants/custom_text.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class HangoutLanguagesCard extends StatelessWidget {
   final List<String> languages;
 
-  const HangoutLanguagesCard({
-    super.key,
-    required this.languages,
-  });
+  const HangoutLanguagesCard({super.key, required this.languages});
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +34,14 @@ class HangoutLanguagesCard extends StatelessWidget {
             color: AppColors.textPrimary,
           ),
           const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Wrap(
+            spacing: 12, // horizontal space between chips
+            runSpacing: 12, // vertical space between lines
+            alignment: WrapAlignment.start,
             children: languages.map((language) {
               return Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 28,
+                  horizontal: 20,
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
@@ -62,5 +62,3 @@ class HangoutLanguagesCard extends StatelessWidget {
     );
   }
 }
-
-

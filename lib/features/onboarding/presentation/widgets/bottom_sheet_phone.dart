@@ -119,7 +119,31 @@ class BottomSheetPhone extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: phoneNumber.length >= 10 ? onGetOtp : null,
+                onPressed: phoneNumber.length >= 10
+                    ? () {
+                        if (!termsAccepted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                             SnackBar(
+                              content: const CustomText(
+                                text: 'Please accept the Terms & Conditions',
+                                fontSize: 14,
+                                fontWeight: FontWeightType.medium,
+                                color: AppColors.white,
+                              ),
+                              backgroundColor: AppColors.primary,
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          );
+                          return;
+                        }
+
+                        onGetOtp();
+                      }
+                    : null,
+
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.buttonPrimary,
                   disabledBackgroundColor: AppColors.buttonDisabled,
@@ -164,8 +188,7 @@ class BottomSheetPhone extends StatelessWidget {
                     text: TextSpan(
                       style: TextStyle(
                         fontFamily: 'Nunito',
-                        fontSize:
-                            getProportionateScreenHeight(10),
+                        fontSize: getProportionateScreenHeight(10),
                         color: AppColors.textLink,
                       ),
                       children: const [

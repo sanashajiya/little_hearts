@@ -46,15 +46,15 @@ class HangoutProfileActionCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icon, color: AppColors.white, size: 16),
-              const SizedBox(width: 8),
+              Icon(icon, color: AppColors.white, size: 20),
+              const SizedBox(width: 4),
               CustomText(
                 text: label,
-                fontSize: 12,
+                fontSize: 15,
                 fontWeight: FontWeightType.medium,
                 color: AppColors.white,
               ),
