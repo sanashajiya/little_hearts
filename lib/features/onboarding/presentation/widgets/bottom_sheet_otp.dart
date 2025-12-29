@@ -1,9 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/theme/app_colors.dart';
+
 import '../../../../core/constants/custom_text.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/app_mediaquery.dart';
 
 class BottomSheetOtp extends StatefulWidget {
@@ -128,7 +129,8 @@ class _BottomSheetOtpState extends State<BottomSheetOtp> {
                       ),
                     ),
                   ),
-                  style: GoogleFonts.nunito(
+                  style: TextStyle(
+                    fontFamily: 'Nunito',
                     fontSize: getProportionateScreenHeight(24),
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/theme/app_colors.dart';
+
 import '../../../../core/constants/custom_text.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/app_mediaquery.dart';
 
 class BottomSheetPhone extends StatelessWidget {
@@ -84,7 +84,8 @@ class BottomSheetPhone extends StatelessWidget {
                       ],
                       decoration: InputDecoration(
                         // hintText: '79811 26542',
-                        hintStyle: GoogleFonts.nunito(
+                        hintStyle: TextStyle(
+                          fontFamily: 'Nunito',
                           fontSize: getProportionateScreenHeight(16),
                           color: AppColors.textHint,
                         ),
@@ -93,9 +94,11 @@ class BottomSheetPhone extends StatelessWidget {
                           horizontal: 16,
                         ),
                       ),
-                      style: GoogleFonts.nunito(
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
                         fontSize: getProportionateScreenHeight(16),
                         color: AppColors.textPrimary,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -157,38 +160,23 @@ class BottomSheetPhone extends StatelessWidget {
                 GestureDetector(
                   onTap: onTermsTextClicked,
                   child: RichText(
+                    textAlign: TextAlign.center,
                     text: TextSpan(
-                      style: GoogleFonts.nunito(
-                        fontSize: getProportionateScreenHeight(9),
+                      style: TextStyle(
+                        fontFamily: 'Nunito',
+                        fontSize:
+                            getProportionateScreenHeight(10),
+                        color: AppColors.textLink,
                       ),
-                      children: [
+                      children: const [
+                        TextSpan(text: 'Before proceeding, please accept the '),
                         TextSpan(
-                          text:
-                              'Before proceeding, please accept the ',
-                          style: GoogleFonts.nunito(
-                            fontSize: getProportionateScreenHeight(10),
-                            color: AppColors.textLink,
-                            
-                          ),
-                        ),
-                        TextSpan(
-                          text:
-                              'Terms & Conditions\n ',
-                          style: GoogleFonts.nunito(
-                            fontSize: getProportionateScreenHeight(10),
-                            color: AppColors.textLink,
+                          text: 'Terms & Conditions\n ',
+                          style: TextStyle(
                             decoration: TextDecoration.underline,
                           ),
                         ),
-                        TextSpan(
-                          text:
-                              'of Little Hearts',
-                          style: GoogleFonts.nunito(
-                            fontSize: getProportionateScreenHeight(10),
-                            color: AppColors.textLink,
-                            
-                          ),
-                        ),
+                        TextSpan(text: 'of Little Hearts'),
                       ],
                     ),
                   ),

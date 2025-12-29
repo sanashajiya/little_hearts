@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../../../core/theme/app_colors.dart';
+
 import '../../../../core/constants/custom_text.dart';
-import '../../../../core/utils/app_mediaquery.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/onboarding_content.dart';
 
 class OnboardingPageContent extends StatelessWidget {
@@ -19,34 +18,23 @@ class OnboardingPageContent extends StatelessWidget {
           children: [
             const SizedBox(height: 60),
             // Title
-            Text(
-              content.title,
-              style: GoogleFonts.nunito(
-                fontSize: getProportionateScreenHeight(32),
-                fontWeight: FontWeight.bold,
-                color: AppColors.textWhite,
-                fontStyle: FontStyle.italic,
-                shadows: const [
-                  Shadow(
-                    offset: Offset(2, 2),
-                    blurRadius: 4,
-                    color: Colors.black26,
-                  ),
-                ],
-              ),
+            CustomText(
+              text: content.title,
+              fontWeight: FontWeightType.bold,
+              fontSize: 32,
+              color: AppColors.textWhite,
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             // Subtitle
-            Text(
-              content.subtitle,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
-                fontSize: getProportionateScreenHeight(14),
-                fontWeight: FontWeight.w500,
-                color: AppColors.textWhite.withValues(alpha: 0.9),
-                fontStyle: FontStyle.italic,
-              ),
-            ),
+             CustomText(
+            text: content.subtitle,
+            fontWeight: FontWeightType.medium,
+            fontSize: 14,
+            color: AppColors.textWhite.withValues(alpha: 0.9),
+            textAlign: TextAlign.center,
+            maxLines: 3,
+          ),
             const SizedBox(height: 20),
             // Image
             Expanded(
