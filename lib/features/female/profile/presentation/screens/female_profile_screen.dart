@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/theme/zone_theme.dart';
-import '../../../../../core/widgets/bottom_navigation_bar.dart';
 import '../../../../../core/cubit/zone_cubit.dart';
 import '../cubit/profile_cubit.dart';
 import '../widgets/profile_header.dart';
@@ -10,7 +9,7 @@ import '../widgets/profile_info_section.dart';
 import '../widgets/bio_card.dart';
 import '../widgets/previous_stories_card.dart';
 import '../widgets/ratings_card.dart';
-
+import '../../../explore/presentation/widgets/female_bottom_navigation_bar.dart';
 class FemaleProfileScreen extends StatelessWidget {
   const FemaleProfileScreen({super.key});
 
@@ -86,8 +85,8 @@ class _ProfileView extends StatelessWidget {
                   },
                 ),
               ),
-              const AppBottomNavigationBar(
-                selectedItem: BottomNavItem.profile,
+              const FemaleBottomNavigationBar(
+                selectedItem: FemaleBottomNavItem.profile,
               ),
             ],
           ),

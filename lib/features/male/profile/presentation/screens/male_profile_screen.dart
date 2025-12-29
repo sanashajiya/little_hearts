@@ -11,8 +11,8 @@ import '../widgets/bio_card.dart';
 import '../widgets/previous_stories_card.dart';
 import '../widgets/ratings_card.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class MaleProfileScreen extends StatelessWidget {
+  const MaleProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
